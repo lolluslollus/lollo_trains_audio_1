@@ -1,0 +1,177 @@
+local soundeffectsutil = require "soundeffectsutil"
+
+function data()
+return {
+	tracks = {
+		
+		{ name = "vehicle/C2/anfahren0.wav", refDist = 10.0 }, 	
+	   { name = "vehicle/C2/anfahren1.wav", refDist = 10.0 }, 	
+	  {name = "vehicle/C2/anfahren2.wav", refDist = 10.0 }, 	
+		{ name = "vehicle/C2/anfahren3.wav", refDist =10.0 }, 	
+		{ name = "vehicle/C2/fahren.wav", refDist = 10.0 }, 	
+		
+		
+	},
+	
+	events = {
+		clacks = {
+			names = {
+				"vehicle/clack/modern/part_1.wav",
+				"vehicle/clack/modern/part_2.wav",
+				"vehicle/clack/modern/part_3.wav",
+				"vehicle/clack/modern/part_4.wav",
+				"vehicle/clack/modern/part_5.wav",
+				"vehicle/clack/modern/part_6.wav",
+				"vehicle/clack/modern/part_7.wav",
+				"vehicle/clack/modern/part_8.wav",
+				"vehicle/clack/modern/part_9.wav",
+				"vehicle/clack/modern/part_10.wav"
+			},
+			refDist = 10.0
+		},
+		
+		horn = { names = { "vehicle/C2/Horn.wav" }, refDist = 10.0 }
+		
+	},
+
+	updateFn = function (input)
+		local axleRefWeight = 10.0
+		
+		return {
+		tracks = {
+				{ 
+					gain = soundeffectsutil.sampleCurve({
+					    { .0, 0},
+						{ .01, 0.1},
+						{ .15, 1},
+						{ .3, 0 },
+					}, input.speed01),
+					pitch = soundeffectsutil.sampleCurve({
+						{ .0, 1},
+						{ 1, 1}, 
+					}, input.speed01)
+				},
+				
+				{ 
+					gain = soundeffectsutil.sampleCurve({
+					    { .0, 0},
+						{ .1, 0},
+						{ .25, 1},
+						{ .3, 1},
+						{ .4, 0 },
+					}, input.speed01),
+					pitch = soundeffectsutil.sampleCurve({
+						{ .0, 1},
+						{ 1, 1}, 
+					}, input.speed01)
+				},
+				
+				{ 
+					gain = soundeffectsutil.sampleCurve({
+					    { .0, 0},
+						{ .23, 0},
+						{ .35, 1},
+						{ .4, 1},
+						{ .5, 0 },
+					}, input.speed01),
+					pitch = soundeffectsutil.sampleCurve({
+						{ .3, 1},
+						{ .5, 1.05}, 
+					}, input.speed01)
+				},
+				
+				{ 
+					gain = soundeffectsutil.sampleCurve({
+					    { .0, 0},
+						{ .4, 0},
+						{ .45, 1},
+						{ .6, 1 },
+						{ 1, 0 },
+					}, input.speed01),
+					pitch = soundeffectsutil.sampleCurve({
+						{ .4, 1},
+						{ .8, 1.3}, 
+					}, input.speed01)
+				},
+				
+				{ 
+					gain = soundeffectsutil.sampleCurve({
+					    { .0, 0},
+						{ .4, 0},
+						{ .7, 1},
+						{ 1, 1 },
+						
+					}, input.speed01),
+					pitch = soundeffectsutil.sampleCurve({
+						{ .0, 1},
+						{ 1, 1}, 
+					}, input.speed01)
+				},
+				
+				
+				
+				--[[
+				{ 
+					gain = soundeffectsutil.sampleCurve({
+					    { .0, 0},
+						{ .01, 0.1},
+						{ .2, 1},
+						{ .201, 0 },
+					}, input.speed01),
+					pitch = soundeffectsutil.sampleCurve({
+						{ .0, 1},
+						{ 1, 1}, 
+					}, input.speed01)
+				},
+				{ 
+					gain = soundeffectsutil.sampleCurve({
+					    { .08, 0},
+						{ .15, 0.4},
+						{ .5, 1 },
+						{ .6, 0 },
+					}, input.speed01),
+					pitch = soundeffectsutil.sampleCurve({
+						{ .0, 1},
+						{ 1, 1}, 
+					}, input.speed01)
+				},
+				{ 
+					gain = soundeffectsutil.sampleCurve({
+					    { .5, 0},
+						{ .54, 0.8},
+						{ .6, 1},
+						{ .8, 1},
+						{ 1, 0},
+
+					}, input.speed01),
+					pitch = soundeffectsutil.sampleCurve({
+						{ 0.5, 1},
+						{ .8, 1.2}, 
+						 
+					}, input.speed01)
+				},
+				{ 
+					gain = soundeffectsutil.sampleCurve({
+					    { .0, 0},
+						{ .5, 0.2},
+						{ .8, 1.4},
+
+					}, input.speed01),
+					pitch = soundeffectsutil.sampleCurve({
+						{ 0, 1},
+						{ 1, 1}, 
+					}, input.speed01)
+				},
+				]]
+				
+			},
+			events = {
+			clacks = soundeffectsutil.clacks(input.speed, input.weight, input.numAxles, axleRefWeight, input.gameSpeedUp),
+				
+				horn = { gain = 0.7, pitch = 1.0 }
+				
+			}
+		}
+	end
+}
+end

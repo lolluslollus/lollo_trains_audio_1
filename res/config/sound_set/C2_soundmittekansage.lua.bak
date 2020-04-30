@@ -1,0 +1,39 @@
+local soundeffectsutil = require "soundeffectsutil"
+
+function data()
+return {
+	tracks = {
+		
+		
+	},
+	
+	events = {
+		
+		openDoors = { names = { "vehicle/C2/Tuereauf.wav" }, refDist = 10.0 },	
+		closeDoors = { names = {"vehicle/C2/Tuerezu.wav"}, refDist = 10.0},
+		horn = { names = { "vehicle/C2/Horn.wav" }, refDist = 10.0 }
+		
+	},
+
+	updateFn = function (input)
+		
+		
+		return {
+		tracks = {
+				
+				
+				
+				
+				
+			},
+			events = {
+			
+				openDoors = { gain = 1.5, pitch = 1.0 },
+				closeDoors = { gain = 1.5, pitch = 1.0 },
+				horn = { gain = 0.8, pitch = 1.0 }
+				
+			}
+		}
+	end
+}
+end

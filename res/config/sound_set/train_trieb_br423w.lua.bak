@@ -1,0 +1,62 @@
+local soundeffectsutil = require "soundeffectsutil"
+
+function data()
+return {
+
+	tracks = {
+	
+		{ name = "vehicle/5_waggon_effects/fahrt/pers_w_schnell.wav", refDist = 25.0 },			
+		{ name = "vehicle/5_waggon_effects/fahrt/trieb_abroll_mitte.wav", refDist = 15.0 },
+		
+		{ name = "vehicle/1_train_effects/trieb_kurve.wav", refDist = 20.0 },
+		{ name = "vehicle/1_train_effects/trieb_bremse.wav", refDist = 25.0 }
+
+	},
+	
+	events =  {
+		openDoors = { names = { "vehicle/train_trieb423/open_doors3500ms.wav" }, refDist = 5.0 },
+		-- LOLLO changed the following
+		closeDoors = { names = { "vehicle/train_trieb423/close_doors3500ms.wav", "vehicle/C2/Tuerezuansage.wav" }, refDist = 5.0 }
+	
+	},
+	
+    updateFn = function (input)
+		local speed01 = input.speed / input.topSpeed
+		local refWeight = 40.0
+		local axleRefWeight = 10.0
+	
+		return {
+		    tracks = {
+				-- Fahrt Nebengeräusch 
+				{ 
+					gain = soundeffectsutil.sampleCurve({ 
+						            { 0.0, 0.0 },
+									{ 0.10, 0.0 },
+						            { 1.0, 0.5 } }, speed01),
+					pitch = soundeffectsutil.sampleCurve({ 
+					                { 0.0, 0.5 },
+						            { 1.0, 1.1 } }, speed01)
+				},
+			    -- Abrolleffekt				
+				{ 
+					gain = soundeffectsutil.sampleCurve({ 
+									{ 0.0, 0.0 },
+									{ 0.4, 0.6 },
+									{ 1.0, 0.5 } }, speed01),
+					pitch = soundeffectsutil.sampleCurve({ 
+									{ 0.0, 0.8 },
+    					            { 1.0, 1.4 } }, speed01)
+				},			
+				
+				soundeffectsutil.squeal(input.speed, input.sideForce, input.maxSideForce),
+				soundeffectsutil.brake(input.speed, input.brakeDecel, 0.5)
+				
+			},
+			events = {
+				openDoors = { gain = 1.0, pitch = 1.0 },
+				closeDoors = { gain = 1.0, pitch = 1.2 }		
+    		}
+		}
+	end
+}
+end
