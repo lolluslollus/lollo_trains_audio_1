@@ -1,5 +1,5 @@
 -- local dump = require "luadump" -- use this to write data into stdout, which is at C:\Program Files (x86)\Steam\userdata\71590188\1066780\local\crash_dump\stdout.txt
-local stringUtils = require('stringUtils')
+local stringUtils = require('lollo_trains_audio/stringUtils')
 
 local function getModelId(fileName)
     -- fileName = "C:/Program Files (x86)/Steam/steamapps/workshop/content/1066780/1943176647/res/config/multiple_unit/oppie_ns_icm_icm3.lua"
