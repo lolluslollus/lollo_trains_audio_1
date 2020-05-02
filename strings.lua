@@ -1,7 +1,8 @@
 function data()
     return {
         en = {
-            ['_DESC'] = 'Adds German underground announcements and makes (most) station masters whistle when a train leaves.'
+            ['_DESC'] = 'Station masters whistle when (several models of) train leave./n'
+            .. 'Certain local trains receive German underground announcements, as a bonus.'
         },
         en = {
             ['_NAME'] = 'Train leaving sound effects'
