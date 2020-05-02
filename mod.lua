@@ -1,23 +1,43 @@
--- local dump = require "luadump" -- use this to write data into stdout, which is at C:\Program Files (x86)\Steam\userdata\71590188\1066780\local\crash_dump\stdout.txt
 local stringUtils = require('lollo_trains_audio/stringUtils')
 
-local function getModelId(fileName)
-    -- fileName = "C:/Program Files (x86)/Steam/steamapps/workshop/content/1066780/1943176647/res/config/multiple_unit/oppie_ns_icm_icm3.lua"
-    local separatorString = 'workshop/content/1066780/'
-    if fileName == nil then
-        return nil
+local function _addEventToSoundset(data, eventName, wavFileName, refDist)
+    if data == nil or stringUtils.isNullOrEmptyString(eventName) or stringUtils.isNullOrEmptyString(wavFileName) then
+        return
     end
 
-    local a, b = string.find(fileName, separatorString)
-    if a == nil or b == nil then
-        return nil
+    if type(data.events) ~= 'table' then
+        data.events = {}
     end
 
-    return string.sub(fileName, b + 1, b + 10)
+    if type(data.events[eventName]) ~= 'table' then
+        data.events[eventName] = {names = {}, refDist = refDist}
+    end
+
+    if type(data.events[eventName].names) ~= 'table' then
+        data.events[eventName].names = {}
+    end
+
+    table.insert(data.events[eventName].names, #data.events[eventName].names + 1, wavFileName)
+end
+
+local function _addEventToUpdateFn(data, eventName)
+    if data == nil or stringUtils.isNullOrEmptyString(eventName) then
+        return data
+    end
+
+    if type(data.events) ~= 'table' then
+        data.events = {}
+    end
+
+    if type(data.events[eventName]) ~= 'table' then
+        data.events[eventName] = {gain = 1.0, pitch = 1.0}
+    end
+
+    return data
 end
 
 function data()
-    local soundSets =                             {
+    local _soundSetsThatReceiveTheDoorClosingMessage = {
         'br_1440_waggon_db.lua',
         'br_1440_waggon_enno.lua',
         'StadlerWaggon.lua',
@@ -26,6 +46,11 @@ function data()
         'train_trieb_br423stw.lua',
         'train_trieb_br423stwh.lua',
         'train_trieb_br423w.lua.bak'
+    }
+    local _whistleNames = {
+        'whistles/station-whistle-01.wav',
+        'whistles/station-whistle-02.wav',
+        'whistles/station-whistle-03.wav'
     }
 
     return {
@@ -42,42 +67,32 @@ function data()
             addModifier(
                 'loadSoundSet',
                 function(fileName, data)
-                    if
-                        stringUtils.stringContainsOneOf(
-                            fileName,
-                            soundSets
-                        )
-                     then
-                        --[[ print(
-                            'LOLLO types = ',
-                            data.events and type(data.events) or 'no data.events',
-                            data.events and data.events.closeDoors and type(data.events.closeDoors) or ' no data.events.closeDoors',
-                            data.events and data.events.closeDoors and data.events.closeDoors.names and type(data.events.closeDoors.names) or 'no data.events.closeDoors.names'
-                        ) ]]
-                        if data and type(data.events) == 'table' then
-                            --print('LOLLO One data.events.closeDoors has type = ', type(data.events.closeDoors))
-                            if type(data.events.closeDoors) ~= 'table' then
-                                data.events.closeDoors = {names = {}, refDist = 5.0}
-                            --print('LOLLO Two data.events.closeDoors has type = ', type(data.events.closeDoors))
+                    if stringUtils.stringContainsOneOf(fileName, _soundSetsThatReceiveTheDoorClosingMessage) then
+                        _addEventToSoundset(data, 'closeDoors', 'closeDoors/bitte-zurueckbleiben-01.wav', 8.0)
+
+                        if data.updateFn then
+                            local originalUpdateFn = data.updateFn
+                            data.updateFn = function(input)
+                                return _addEventToUpdateFn(originalUpdateFn(input), 'closeDoors')
                             end
-                            if type(data.events.closeDoors.names) ~= 'table' then
-                                data.events.closeDoors.names = {}
-                            end
-                            -- print('LOLLO debug.getinfo(1).source', debug.getinfo(1).source)
-                            -- print('LOLLO debug.getinfo(2).source', debug.getinfo(2).source)
-                            -- print('LOLLO debug.getinfo(3).source', debug.getinfo(3).source)
-                            -- local sourcePath = debug.getinfo(1).source
-                            -- if type(sourcePath) == 'string' and string.len(sourcePath) > 7 then -- 7 is the length of "mod.lua"
-                            --     sourcePath = string.sub(sourcePath, 2) -- remove the @ at the beginning
-                            --     local absolutePath = string.sub(sourcePath, 0, string.len(sourcePath) - 7) .. 'res/audio/effects/Tuerezuansage.wav'
-                            --     print('LOLLO new path = ', absolutePath)
-                            -- end
-                            local absolutePath = 'lollo/lolloTuerezuansage.wav' -- I may be wrong but a unique name seems important
-                            table.insert(data.events.closeDoors.names, #data.events.closeDoors.names + 1, absolutePath)
-                            --print('LOLLO the table is now:')
-                            --require('luadump')(true)(data.events.closeDoors.names)
                         end
                     end
+
+                    -- We have no metadata, so we try to guess if it is a train sound set.
+                    -- Only trains have clacks, so it is a good guess.
+                    -- Some trains may not have them: if so, we leave them out.
+                    if data and type(data.events) == 'table' and type(data.events.clacks) == 'table' then
+                        local whistleIndex = math.min(math.random(4), 3)
+                        _addEventToSoundset(data, 'closeDoors', _whistleNames[whistleIndex], 3.0)
+
+                        if data.updateFn then
+                            local originalUpdateFn = data.updateFn
+                            data.updateFn = function(input)
+                                return _addEventToUpdateFn(originalUpdateFn(input), 'closeDoors')
+                            end
+                        end
+                    end
+
                     return data
                 end
             )

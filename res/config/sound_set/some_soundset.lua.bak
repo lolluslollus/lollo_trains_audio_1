@@ -3,9 +3,9 @@ local soundeffectsutil = require "soundeffectsutil"
 function data()
 return {
 	tracks = {
-		{ name = "vehicle/waggon_modern/_waggon_modern.wav", refDist = 25.0 },
-		{ name = "vehicle/train/wheels_ringing2.wav", refDist = 25.0 },
-		{ name = "vehicle/train/brakes.wav", refDist = 25.0 }
+		{ name = "*.wav", refDist = 25.0 },
+		{ name = "wheels-ringing.wav", refDist = 25.0 },
+		{ name = "braking.wav", refDist = 25.0 }
 	},
 	events = {
 		clacks = {
@@ -21,10 +21,10 @@ return {
 				"vehicle/clack/modern/part_9.wav",
 				"vehicle/clack/modern/part_10.wav"
 			},
-			refDist = 15.0
+			refDist = 20.0
 		},
-		openDoors = { names = { "vehicle/br_1440/br_1440_open_doors.wav" }, refDist = 5.0 },	
-		closeDoors = { names = { "vehicle/br_1440/br_1440_close_doors.wav", "vehicle/C2/Tuerezuansage.wav" }, refDist = 5.0 }
+		openDoors = { names = { "*.wav" }, refDist = 10.0 },
+		closeDoors = { names = { "*.wav", "bitte-zurueckbleiben.wav" }, refDist = 10.0 }
 	},
 
 	updateFn = function (input)
