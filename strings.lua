@@ -5,7 +5,7 @@ function data()
             .. 'Certain local trains receive German underground announcements, as a bonus.'
         },
         en = {
-            ['_NAME'] = 'Train leaving sound effects'
+            ['_NAME'] = 'Extra sound effects for trains'
         }
     }
 end
