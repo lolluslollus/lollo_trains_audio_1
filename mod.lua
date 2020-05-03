@@ -36,26 +36,17 @@ local function _addEventToUpdateFn(data, eventName)
     return data
 end
 
-function data()
-    local _soundSetsThatReceiveTheDoorClosingMessage = {
-        'br_1440_waggon_db.lua',
-        'br_1440_waggon_enno.lua',
-        'StadlerWaggon.lua',
-        'StadlerWaggon2.lua',
-        'talent2_middle.lua',
-        'train_trieb_br423stw.lua',
-        'train_trieb_br423stwh.lua',
-        'train_trieb_br423w.lua.bak'
-    }
-    local _whistleNames = {
-        'whistles/station-whistle-01.wav',
-        'whistles/station-whistle-02.wav',
-        'whistles/station-whistle-03.wav'
-    }
+local _mySettings = require('lollo_trains_audio/settings')
+local _whistleWavNames = {
+    'whistles/station-whistle-01.wav',
+    'whistles/station-whistle-02.wav',
+    'whistles/station-whistle-03.wav'
+}
 
+function data()
     return {
         info = {
-            minorVersion = 0,
+            minorVersion = 1,
             severityAdd = 'NONE',
             severityRemove = 'NONE',
             name = _('_NAME'),
@@ -67,28 +58,45 @@ function data()
             addModifier(
                 'loadSoundSet',
                 function(fileName, data)
-                    if stringUtils.stringContainsOneOf(fileName, _soundSetsThatReceiveTheDoorClosingMessage) then
-                        _addEventToSoundset(data, 'closeDoors', 'closeDoors/bitte-zurueckbleiben-01.wav', 8.0)
+                    if not stringUtils.isNullOrEmptyString(_mySettings.openDoorsWavName) then
+                        if stringUtils.stringContainsOneOf(fileName, _mySettings.soundSetsThatReceiveTheOpenDoorsMessage) then
+                            _addEventToSoundset(data, 'openDoors', _mySettings.openDoorsWavName, 8.0)
 
-                        if data.updateFn then
-                            local originalUpdateFn = data.updateFn
-                            data.updateFn = function(input)
-                                return _addEventToUpdateFn(originalUpdateFn(input), 'closeDoors')
+                            if data.updateFn then
+                                local originalUpdateFn = data.updateFn
+                                data.updateFn = function(input)
+                                    return _addEventToUpdateFn(originalUpdateFn(input), 'openDoors')
+                                end
                             end
                         end
                     end
 
-                    -- We have no metadata, so we try to guess if it is a train sound set.
-                    -- Only trains have clacks, so it is a good guess.
-                    -- Some trains may not have them: if so, we leave them out.
-                    if data and type(data.events) == 'table' and type(data.events.clacks) == 'table' then
-                        local whistleIndex = math.min(math.random(4), 3)
-                        _addEventToSoundset(data, 'closeDoors', _whistleNames[whistleIndex], 3.0)
+                    if not stringUtils.isNullOrEmptyString(_mySettings.closeDoorsWavName) then
+                        if stringUtils.stringContainsOneOf(fileName, _mySettings.soundSetsThatReceiveTheCloseDoorsMessage) then
+                            _addEventToSoundset(data, 'closeDoors', _mySettings.closeDoorsWavName, 8.0)
 
-                        if data.updateFn then
-                            local originalUpdateFn = data.updateFn
-                            data.updateFn = function(input)
-                                return _addEventToUpdateFn(originalUpdateFn(input), 'closeDoors')
+                            if data.updateFn then
+                                local originalUpdateFn = data.updateFn
+                                data.updateFn = function(input)
+                                    return _addEventToUpdateFn(originalUpdateFn(input), 'closeDoors')
+                                end
+                            end
+                        end
+                    end
+
+                    if _mySettings.addStationMasterWhistles then
+                        -- We have no metadata, so we try to guess if it is a train sound set.
+                        -- Only trains have clacks, so it is a good guess.
+                        -- Some trains may not have them: if so, we leave them out.
+                        if data and type(data.events) == 'table' and type(data.events.clacks) == 'table' then
+                            local whistleIndex = math.min(math.random(4), 3)
+                            _addEventToSoundset(data, 'closeDoors', _whistleWavNames[whistleIndex], 3.0)
+
+                            if data.updateFn then
+                                local originalUpdateFn = data.updateFn
+                                data.updateFn = function(input)
+                                    return _addEventToUpdateFn(originalUpdateFn(input), 'closeDoors')
+                                end
                             end
                         end
                     end
