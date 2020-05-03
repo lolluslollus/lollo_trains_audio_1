@@ -89,8 +89,9 @@ function data()
                         -- Only trains have clacks, so it is a good guess.
                         -- Some trains may not have them: if so, we leave them out.
                         if data and type(data.events) == 'table' and type(data.events.clacks) == 'table' then
-                            local whistleIndex = math.min(math.random(4), 3)
-                            _addEventToSoundset(data, 'closeDoors', _whistleWavNames[whistleIndex], 3.0)
+                            local whistleIndex = math.random(#_whistleWavNames)
+                            print('LOLLO whistleIndex = ', whistleIndex)
+                            _addEventToSoundset(data, 'closeDoors', _whistleWavNames[whistleIndex], 1.5)
 
                             if data.updateFn then
                                 local originalUpdateFn = data.updateFn
