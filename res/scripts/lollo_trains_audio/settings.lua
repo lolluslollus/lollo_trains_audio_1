@@ -13,9 +13,10 @@ return {
         -- 'br_1440_waggon_db.lua',
         -- 'br_1440_waggon_enno.lua',
         '/BVGH_', -- metro berlin
-        'talent2_front.lua',
-        'talent2_middle.lua',
-        'train_trieb_br423' -- br 422, 423, 430 -- this is enough, but you could also use the following
+        -- 'talent2_front.lua',
+        -- 'talent2_middle.lua',
+        '/talent2_.lua',
+        '/train_trieb_br423' -- br 422, 423, 430 -- this is enough, but you could also use the following
         -- 'train_trieb_br423stw.lua', -- br 422, 423, 430
         -- 'train_trieb_br423stwh.lua', -- br 422, 423, 430
     },
@@ -24,23 +25,29 @@ return {
     -- Every tuple contains a part of the sound set file name and the path of the wav file, relative to res/audio/effects/
     -- Mods store their sound sets in <mod directory>/res/config/sound_set .
     soundSetsThatReceiveTheCloseDoorsSound = {
-        {soundSetName = '/br_1440_', wavName = 'closeDoors/bitte-zurueckbleiben-02.wav'},
-        {soundSetName = 'StadlerWaggon.lua', wavName = 'closeDoors/bitte-zurueckbleiben-02.wav'},
-        {soundSetName = 'StadlerWaggon2.lua', wavName = 'closeDoors/bitte-zurueckbleiben-02.wav'},
-        {soundSetName = 'talent2_front.lua', wavName = 'closeDoors/bitte-zurueckbleiben-02.wav'},
-        {soundSetName = 'talent2_middle.lua', wavName = 'closeDoors/bitte-zurueckbleiben-02.wav'},
-        {soundSetName = 'train_trieb_br423', wavName = 'closeDoors/bitte-zurueckbleiben-02.wav'} -- br 422, 423, 430
+        -- {soundSetName = '/br_1440_', wavName = 'closeDoors/bitte-zurueckbleiben-02.wav'}, -- too much
+        {soundSetName = '/br_1440_waggon_db.lua', wavName = 'closeDoors/bitte-zurueckbleiben-02.wav'},
+        {soundSetName = '/br_1440_waggon_enno.lua', wavName = 'closeDoors/bitte-zurueckbleiben-02.wav'},
+        {soundSetName = '/StadlerWaggon.lua', wavName = 'closeDoors/bitte-zurueckbleiben-02.wav'},
+        {soundSetName = '/StadlerWaggon2.lua', wavName = 'closeDoors/bitte-zurueckbleiben-02.wav'},
+        -- {soundSetName = '/talent2_front.lua', wavName = 'closeDoors/bitte-zurueckbleiben-02.wav'}, -- too much
+        {soundSetName = '/talent2_middle.lua', wavName = 'closeDoors/bitte-zurueckbleiben-02.wav'},
+        -- {soundSetName = '/train_trieb_br423', wavName = 'closeDoors/bitte-zurueckbleiben-02.wav'}, -- br 422, 423, 430 -- too much
+        {soundSetName = '/train_trieb_br423stw.lua', wavName = 'closeDoors/bitte-zurueckbleiben-02.wav'} -- br 422, 423, 430
     },
-    addOpenDoorsSounds = false, -- can only be true or false
+    addOpenDoorsSounds = true, -- can only be true or false
     -- Respect the data structure if you want to change this. It is a table of tuples. You can add or remove records, but not the table.
     -- Every tuple contains a part of the sound set file name and the path of the wav file, relative to res/audio/effects/
     -- Mods store their sound sets in <mod directory>/res/config/sound_set .
     soundSetsThatReceiveTheOpenDoorsSound = {
-        {soundSetName = '/br_1440_', wavName = 'openDoors/mind-the-gap-01.wav'},
-        {soundSetName = 'StadlerWaggon.lua', wavName = 'openDoors/mind-the-gap-01.wav'},
-        {soundSetName = 'StadlerWaggon2.lua', wavName = 'openDoors/mind-the-gap-01.wav'},
-        {soundSetName = 'talent2_front.lua', wavName = 'openDoors/mind-the-gap-01.wav'},
-        {soundSetName = 'talent2_middle.lua', wavName = 'openDoors/mind-the-gap-01.wav'},
-        {soundSetName = 'train_trieb_br423', wavName = 'openDoors/mind-the-gap-01.wav'} -- br 422, 423, 430
+        -- {soundSetName = '/br_1440_', wavName = 'openDoors/mind-the-gap-01.wav'}, -- too much
+        {soundSetName = '/br_1440_waggon_db.lua', wavName = 'openDoors/mind-the-gap-01.wav'},
+        {soundSetName = '/br_1440_waggon_enno.lua', wavName = 'openDoors/mind-the-gap-01.wav'},
+        {soundSetName = '/StadlerWaggon.lua', wavName = 'openDoors/mind-the-gap-01.wav'},
+        {soundSetName = '/StadlerWaggon2.lua', wavName = 'openDoors/mind-the-gap-01.wav'},
+        -- {soundSetName = '/talent2_front.lua', wavName = 'openDoors/mind-the-gap-01.wav'}, -- too much
+        {soundSetName = '/talent2_middle.lua', wavName = 'openDoors/mind-the-gap-01.wav'},
+        -- {soundSetName = '/train_trieb_br423', wavName = 'openDoors/mind-the-gap-01.wav'}, -- br 422, 423, 430 -- too much
+        {soundSetName = '/train_trieb_br423stw.lua', wavName = 'openDoors/mind-the-gap-01.wav'} -- br 422, 423, 430
     }
 }
