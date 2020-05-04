@@ -1,3 +1,4 @@
+local settingsUtils = require('lollo_trains_audio/settingsUtils')
 local stringUtils = require('lollo_trains_audio/stringUtils')
 local soundsetutil = require('soundsetutil')
 -- local inspect = require('inspect')
@@ -273,8 +274,9 @@ function data()
                     --     end
                     -- end
 
-                    if not stringUtils.isNullOrEmptyString(_mySettings.openDoorsWavName) then
-                        if stringUtils.stringContainsOneOf(fileName, _mySettings.soundSetsThatReceiveTheOpenDoorsMessage) then
+                    if _mySettings.addOpenDoorsSounds then
+                        local wavName = settingsUtils.getWavName(_mySettings.soundSetsThatReceiveTheOpenDoorsSound, fileName)
+                        if not stringUtils.isNullOrEmptyString(wavName) then
                             if _getIsEventInSoundset(data, 'openDoors') then
                                 -- this seems useless, even though some mods don't return all events in updateFn
                                 -- if data.updateFn then -- it's always function(input)
@@ -284,16 +286,17 @@ function data()
                                 --     end
                                 -- end
                                 -- print('LOLLO event openDoors already in the sound set, fileName = ', fileName)
-                                _addWavToSoundsetEvent(data, 'openDoors', _mySettings.openDoorsWavName, 5.0)
+                                _addWavToSoundsetEvent(data, 'openDoors', wavName, 5.0)
                             else
                                 -- print('LOLLO event openDoors not in the sound set yet, fileName = ', fileName)
-                                _addNewEventToSoundset(data, 'openDoors', _mySettings.openDoorsWavName, 5.0)
+                                _addNewEventToSoundset(data, 'openDoors', wavName, 5.0)
                             end
                         end
                     end
 
-                    if not stringUtils.isNullOrEmptyString(_mySettings.closeDoorsWavName) then
-                        if stringUtils.stringContainsOneOf(fileName, _mySettings.soundSetsThatReceiveTheCloseDoorsMessage) then
+                    if _mySettings.addCloseDoorsSounds then
+                        local wavName = settingsUtils.getWavName(_mySettings.soundSetsThatReceiveTheCloseDoorsSound, fileName)
+                        if not stringUtils.isNullOrEmptyString(wavName) then
                             if _getIsEventInSoundset(data, 'closeDoors') then
                                 -- this seems useless, even though some mods don't return all events in updateFn
                                 -- if data.updateFn then -- it's always function(input)
@@ -303,10 +306,10 @@ function data()
                                 --     end
                                 -- end
                                 -- print('LOLLO event closeDoors already in the sound set, fileName = ', fileName)
-                                _addWavToSoundsetEvent(data, 'closeDoors', _mySettings.closeDoorsWavName, 5.0)
+                                _addWavToSoundsetEvent(data, 'closeDoors', wavName, 5.0)
                             else
                                 -- print('LOLLO event closeDoors not in the sound set yet, fileName = ', fileName)
-                                _addNewEventToSoundset(data, 'closeDoors', _mySettings.closeDoorsWavName, 5.0)
+                                _addNewEventToSoundset(data, 'closeDoors', wavName, 5.0)
                             end
                         end
                     end
