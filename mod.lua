@@ -237,13 +237,16 @@ local _mySettings = require('lollo_trains_audio/settings')
 local _whistleWavNames = {
     'whistles/station-whistle-01.wav',
     'whistles/station-whistle-02.wav',
-    'whistles/station-whistle-03.wav'
+    'whistles/station-whistle-03.wav',
+    'whistles/station-whistle-04.wav',
+    'whistles/station-whistle-05.wav',
+    'whistles/station-whistle-06.wav',
 }
 
 function data()
     return {
         info = {
-            minorVersion = 3,
+            minorVersion = 4,
             severityAdd = 'NONE',
             severityRemove = 'NONE',
             name = _('_NAME'),
