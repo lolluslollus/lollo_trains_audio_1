@@ -9,7 +9,7 @@ function data()
                 You can also add your own sounds. Just play around.
 
                 Note 1: the whistles can only come if the train has a sound set with clacks.
-                This mod adds clacks to certain sound sets that haven't got them.
+                This mod adds clacks to certain modded sound sets that haven't got them.
 
                 Note 2: to get more whistles, load https://steamcommunity.com/sharedfiles/filedetails/?id=1956333378 before other mods and this one after.
 
