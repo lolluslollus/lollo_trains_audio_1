@@ -33,7 +33,7 @@ return {
         -- {soundSetName = '/talent2_front.lua', wavName = 'closeDoors/bitte-zurueckbleiben-02.wav'}, -- too much
         {soundSetName = '/talent2_middle.lua', wavName = 'closeDoors/bitte-zurueckbleiben-02.wav'},
         -- {soundSetName = '/train_trieb_br423', wavName = 'closeDoors/bitte-zurueckbleiben-02.wav'}, -- br 422, 423, 430 -- too much
-        {soundSetName = '/train_trieb_br423stw.lua', wavName = 'closeDoors/bitte-zurueckbleiben-02.wav'} -- br 422, 423, 430
+        {soundSetName = '/train_trieb_br423stw.lua', wavName = 'closeDoors/bitte-zurueckbleiben-02.wav'}, -- br 422, 423, 430
     },
     addOpenDoorsSounds = true, -- can only be true or false
     -- Respect the data structure if you want to change this. It is a table of tuples. You can add or remove records, but not the table.
@@ -48,6 +48,7 @@ return {
         -- {soundSetName = '/talent2_front.lua', wavName = 'openDoors/mind-the-gap-01.wav'}, -- too much
         {soundSetName = '/talent2_middle.lua', wavName = 'openDoors/mind-the-gap-01.wav'},
         -- {soundSetName = '/train_trieb_br423', wavName = 'openDoors/mind-the-gap-01.wav'}, -- br 422, 423, 430 -- too much
-        {soundSetName = '/train_trieb_br423stw.lua', wavName = 'openDoors/mind-the-gap-01.wav'} -- br 422, 423, 430
+        {soundSetName = '/train_trieb_br423stw.lua', wavName = 'openDoors/mind-the-gap-01.wav'}, -- br 422, 423, 430
+        -- {soundSetName = '/1992_stock_sound.lua', wavName = 'openDoors/mind-the-gap-01.wav'} -- london
     }
 }
