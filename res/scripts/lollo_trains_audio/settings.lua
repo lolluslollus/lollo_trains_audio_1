@@ -50,6 +50,6 @@ return {
         {soundSetName = '/talent2_middle.lua', wavName = 'openDoors/mind-the-gap-01.wav'},
         -- {soundSetName = '/train_trieb_br423', wavName = 'openDoors/mind-the-gap-01.wav'}, -- br 422, 423, 430 -- too much
         {soundSetName = '/train_trieb_br423stw.lua', wavName = 'openDoors/mind-the-gap-01.wav'}, -- br 422, 423, 430
-        {soundSetName = '/1992_stock_sound.lua', wavName = 'openDoors/mind-the-gap-01.wav'} -- london
+        -- {soundSetName = '/1992_stock_sound.lua', wavName = 'openDoors/mind-the-gap-01.wav'} -- london UG
     }
 }
