@@ -7,6 +7,7 @@ return {
     -- It is a table of parts of sound set file names.
     -- Mods store their sound sets in <mod directory>/res/config/sound_set .
     soundSetsThatReceiveNoWhistle = {
+        '/1992_stock_sound', -- London UG
         '/br_1440_', -- this is enough, but you could also use the following
         -- 'br_1440_front_db.lua',
         -- 'br_1440_front_enno.lua',
