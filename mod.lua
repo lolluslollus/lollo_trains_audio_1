@@ -246,7 +246,7 @@ local _whistleWavNames = {
 function data()
     return {
         info = {
-            minorVersion = 7,
+            minorVersion = 8,
             severityAdd = 'NONE',
             severityRemove = 'NONE',
             name = _('_NAME'),
@@ -319,7 +319,7 @@ function data()
 
                     if _mySettings.addStationMasterWhistles and not stringUtils.stringContainsOneOf(fileName, _mySettings.soundSetsThatReceiveNoWhistle) then
                         -- We have no metadata, so we try to guess if it is a train sound set.
-                        -- Only trains have clacks, so it is a good guess.
+                        -- Only trains have clacks or chuffs, so it is a good guess.
                         -- Some trains may not have them: if so, we leave them out.
 
                         -- Fix some sound sets that have no clacks
@@ -334,7 +334,8 @@ function data()
                             _addClacksPassengersNew(data)
                         end
 
-                        if data and type(data.events) == 'table' and type(data.events.clacks) == 'table' then
+                        if data and type(data.events) == 'table'
+                        and (type(data.events.clacks) == 'table' or type(data.events.chuffs) == 'table') then
                             -- print('LOLLO this is going to change = ', fileName)
                             local whistleIndex = math.random(#_whistleWavNames)
                             if _getIsEventInSoundset(data, 'closeDoors') then

@@ -10,8 +10,8 @@ function data()
                 For example, you can make it say "mind the gap" and "stand clear of the doors", or nothing at all.
                 You can also add your own sounds. Just play around.
 
-                Note 1: the whistles can only come if the train has a sound set with clacks.
-                This mod adds clacks to certain modded sound sets that haven't got them.
+                Note 1: the whistles can only come if the train has a sound set with clacks or chuffs.
+                This mod adds clacks to certain modded sound sets that haven't got them. It does not add chuffs.
 
                 Note 2: to get more whistles, load https://steamcommunity.com/sharedfiles/filedetails/?id=1956333378 before other mods and this one after.
 
