@@ -1,8 +1,8 @@
 local settingsUtils = require('lollo_trains_audio/settingsUtils')
-local stringUtils = require('lollo_trains_audio/stringUtils')
 local soundsetutil = require('soundsetutil')
--- local inspect = require('inspect')
+local stringUtils = require('lollo_trains_audio/stringUtils')
 
+local _refDist = 50.0
 local function _addClacksFreightNew(data)
     local clackNames = {
         'vehicle/clack/modern/part_1.wav',
@@ -98,6 +98,7 @@ local function _addWavToSoundsetEvent(data, eventName, wavFileName, refDist, isA
         data.events[eventName].names = {}
     end
 
+    -- print('data before =') debugPrint(data)
     if not stringUtils.arrayHasValue(data.events[eventName].names, wavFileName) then
         if isAddFirst then
             -- LOLLO NOTE somehow, the game won't play the file if it is in the first position
@@ -105,6 +106,7 @@ local function _addWavToSoundsetEvent(data, eventName, wavFileName, refDist, isA
         else
             table.insert(data.events[eventName].names, #data.events[eventName].names + 1, wavFileName)
         end
+        data.events[eventName].refDist = refDist
     end
 
     -- from here on, it's probably useless
@@ -129,6 +131,8 @@ local function _addWavToSoundsetEvent(data, eventName, wavFileName, refDist, isA
     if type(data.result.events[eventName]) ~= 'table' then
         data.result.events[eventName] = {gain = 1.0, pitch = 1.0}
     end
+
+    -- print('data after =') debugPrint(data)
 end
 
 -- local function _addEventToUpdateFn(data, eventName)
@@ -143,9 +147,7 @@ end
 
 --     if type(data.events[eventName]) ~= 'table' then
 --         print('LOLLO strange 04, data.events.' .. eventName .. ' = ')
---         require('luadump')(true)(data.events[eventName])
---         print('data = ')
---         require('luadump')(true)(data)
+--         print('data = ') debugPrint(data)
 --         data.events[eventName] = {gain = 1.0, pitch = 1.0}
 --     end
 
@@ -170,37 +172,6 @@ end
 --     axleRefWeight = 10,
 --     gameSpeedUp = 1
 -- }
-
--- local function _getIsFunctionsSame(func1, func2)
---     if type(func1) ~= 'function' or type(func2) ~= 'function' then
---         return false
---     end
-
---     local input = {
---         speed = 1,
---         topSpeed = 100,
---         speed01 = 10,
---         weight = 100,
---         brakeDecel = 1,
---         powerOutput = 100,
---         power = 100,
---         power01 = 100,
---         chuffStep = 100,
---         curveRadius = 100,
---         curveSpeedLimit = 100,
---         sideForce = 100,
---         maxSideForce = 100,
---         numAxles = 2,
---         axleRefWeight = 10,
---         gameSpeedUp = 1
---     }
-
---     print('LOLLO func1 returns:')
---     print(inspect(func1(input)))
---     print('LOLLO func2 returns:')
---     print(inspect(func2(input)))
---     return inspect(func1(input)) == inspect(func2(input))
--- end
 
 local function _getIsEventInSoundset(data, eventName)
     if data == nil or stringUtils.isNullOrEmptyString(eventName) then
@@ -246,7 +217,7 @@ local _whistleWavNames = {
 function data()
     return {
         info = {
-            minorVersion = 8,
+            minorVersion = 9,
             severityAdd = 'NONE',
             severityRemove = 'NONE',
             name = _('_NAME'),
@@ -261,19 +232,15 @@ function data()
                     -- LOLLO NOTE br101 whistles but vectron does not: why?
                     -- it looks like locos have no doors, only waggons do, even the stock gondola does - and it has clacks.
                     -- if stringUtils.stringContains(fileName, 'br101') then -- this one whistles
-                    --     print('LOLLO br101 found. It has data:')
-                    --     require('luadump')(true)(data)
+                    --     print('LOLLO br101 found. It has data:') debugPrint(data)
                     --     if type(data.updateFn) == 'function' then
-                    --         print('updateFn produces = ')
-                    --         require('luadump')(true)(data.updateFn(_sampleInput))
+                    --         print('updateFn produces = ') debugPrint(data.updateFn(_sampleInput))
                     --     end
                     -- end
                     -- if stringUtils.stringContains(fileName, 'train_electric_vectron') then -- this one won't whistle
-                    --     print('LOLLO train_electric_vectron found. It has data:')
-                    --     require('luadump')(true)(data)
+                    --     print('LOLLO train_electric_vectron found. It has data:') debugPrint(data)
                     --     if type(data.updateFn) == 'function' then
-                    --         print('updateFn produces = ')
-                    --         require('luadump')(true)(data.updateFn(_sampleInput))
+                    --         print('updateFn produces = ') debugPrint(data.updateFn(_sampleInput))
                     --     end
                     -- end
 
@@ -289,10 +256,10 @@ function data()
                                 --     end
                                 -- end
                                 -- print('LOLLO event openDoors already in the sound set, fileName = ', fileName)
-                                _addWavToSoundsetEvent(data, 'openDoors', wavName, 5.0)
+                                _addWavToSoundsetEvent(data, 'openDoors', wavName, _refDist)
                             else
                                 -- print('LOLLO event openDoors not in the sound set yet, fileName = ', fileName)
-                                _addNewEventToSoundset(data, 'openDoors', wavName, 5.0)
+                                _addNewEventToSoundset(data, 'openDoors', wavName, _refDist)
                             end
                         end
                     end
@@ -309,10 +276,10 @@ function data()
                                 --     end
                                 -- end
                                 -- print('LOLLO event closeDoors already in the sound set, fileName = ', fileName)
-                                _addWavToSoundsetEvent(data, 'closeDoors', wavName, 5.0)
+                                _addWavToSoundsetEvent(data, 'closeDoors', wavName, _refDist)
                             else
                                 -- print('LOLLO event closeDoors not in the sound set yet, fileName = ', fileName)
-                                _addNewEventToSoundset(data, 'closeDoors', wavName, 5.0)
+                                _addNewEventToSoundset(data, 'closeDoors', wavName, _refDist)
                             end
                         end
                     end
@@ -347,10 +314,10 @@ function data()
                                 --     end
                                 -- end
                                 -- print('LOLLO event already in the sound set, fileName = ', fileName)
-                                _addWavToSoundsetEvent(data, 'closeDoors', _whistleWavNames[whistleIndex], 10.0)
+                                _addWavToSoundsetEvent(data, 'closeDoors', _whistleWavNames[whistleIndex], _refDist)
                             else
                                 -- print('LOLLO event not in the sound set yet, fileName = ', fileName)
-                                _addNewEventToSoundset(data, 'closeDoors', _whistleWavNames[whistleIndex], 10.0)
+                                _addNewEventToSoundset(data, 'closeDoors', _whistleWavNames[whistleIndex], _refDist)
                             end
 
                         -- if data.updateFn then
@@ -376,19 +343,15 @@ function data()
                     end
 
                     -- if stringUtils.stringContains(fileName, 'train_electric_vectron') then
-                    --     print('LOLLO train_electric_vectron now has data:')
-                    --     require('luadump')(true)(data)
+                    --     print('LOLLO train_electric_vectron now has data:') debugPrint(data)
                     --     if type(data.updateFn) == 'function' then
-                    --         print('updateFn produces = ')
-                    --         require('luadump')(true)(data.updateFn(_sampleInput))
+                    --         print('updateFn produces = ') debugPrint(data.updateFn(_sampleInput))
                     --     end
                     -- end
                     -- if stringUtils.stringContains(fileName, 'br101') then
-                    --     print('LOLLO br101 now has data:')
-                    --     require('luadump')(true)(data)
+                    --     print('LOLLO br101 now has data:') debugPrint(data)
                     --     if type(data.updateFn) == 'function' then
-                    --         print('updateFn produces = ')
-                    --         require('luadump')(true)(data.updateFn(_sampleInput))
+                    --         print('updateFn produces = ') debugPrint(data.updateFn(_sampleInput))
                     --     end
                     -- end
 

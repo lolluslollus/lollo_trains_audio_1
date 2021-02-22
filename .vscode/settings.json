@@ -1,6 +1,7 @@
 {
     "Lua.diagnostics.globals": [
         "addModifier",
-        "data"
+        "data",
+        "debugPrint"
     ]
 }

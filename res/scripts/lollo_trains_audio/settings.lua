@@ -27,14 +27,14 @@ return {
     -- Mods store their sound sets in <mod directory>/res/config/sound_set .
     soundSetsThatReceiveTheCloseDoorsSound = {
         -- {soundSetName = '/br_1440_', wavName = 'closeDoors/bitte-zurueckbleiben-02.wav'}, -- too much
-        {soundSetName = '/br_1440_waggon_db.lua', wavName = 'closeDoors/bitte-zurueckbleiben-02.wav'},
-        {soundSetName = '/br_1440_waggon_enno.lua', wavName = 'closeDoors/bitte-zurueckbleiben-02.wav'},
-        {soundSetName = '/StadlerWaggon.lua', wavName = 'closeDoors/bitte-zurueckbleiben-02.wav'},
-        {soundSetName = '/StadlerWaggon2.lua', wavName = 'closeDoors/bitte-zurueckbleiben-02.wav'},
-        -- {soundSetName = '/talent2_front.lua', wavName = 'closeDoors/bitte-zurueckbleiben-02.wav'}, -- too much
-        {soundSetName = '/talent2_middle.lua', wavName = 'closeDoors/bitte-zurueckbleiben-02.wav'},
-        -- {soundSetName = '/train_trieb_br423', wavName = 'closeDoors/bitte-zurueckbleiben-02.wav'}, -- br 422, 423, 430 -- too much
-        {soundSetName = '/train_trieb_br423stw.lua', wavName = 'closeDoors/bitte-zurueckbleiben-02.wav'}, -- br 422, 423, 430
+        {soundSetName = '/br_1440_waggon_db.lua', wavName = 'closeDoors/stand-clear-of-the-doors-01.wav'},
+        {soundSetName = '/br_1440_waggon_enno.lua', wavName = 'closeDoors/stand-clear-of-the-doors-01.wav'},
+        {soundSetName = '/StadlerWaggon.lua', wavName = 'closeDoors/stand-clear-of-the-doors-01.wav'},
+        {soundSetName = '/StadlerWaggon2.lua', wavName = 'closeDoors/stand-clear-of-the-doors-01.wav'},
+        -- {soundSetName = '/talent2_front.lua', wavName = 'closeDoors/stand-clear-of-the-doors-01.wav'}, -- too much
+        {soundSetName = '/talent2_middle.lua', wavName = 'closeDoors/stand-clear-of-the-doors-01.wav'},
+        -- {soundSetName = '/train_trieb_br423', wavName = 'closeDoors/stand-clear-of-the-doors-01.wav'}, -- br 422, 423, 430 -- too much
+        {soundSetName = '/train_trieb_br423stw.lua', wavName = 'closeDoors/stand-clear-of-the-doors-01.wav'}, -- br 422, 423, 430
     },
     addOpenDoorsSounds = true, -- can only be true or false
     -- Respect the data structure if you want to change this. It is a table of tuples. You can add or remove records, but not the table.
