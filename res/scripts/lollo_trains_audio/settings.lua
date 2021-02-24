@@ -7,6 +7,7 @@ return {
     -- It is a table of parts of sound set file names.
     -- Mods store their sound sets in <mod directory>/res/config/sound_set .
     soundSetsThatReceiveNoWhistle = {
+        '/1044_', -- BVG F92 - metro Berlin
         '/1992_stock_sound', -- London UG
         '/br_1440_', -- this is enough, but you could also use the following
         -- 'br_1440_front_db.lua',
@@ -26,6 +27,7 @@ return {
     -- Every tuple contains a part of the sound set file name and the path of the wav file, relative to res/audio/effects/
     -- Mods store their sound sets in <mod directory>/res/config/sound_set .
     soundSetsThatReceiveTheCloseDoorsSound = {
+        {soundSetName = '/1044_sound.lua', wavName = 'closeDoors/bitte-zurueckbleiben-02.wav'},
         -- {soundSetName = '/br_1440_', wavName = 'closeDoors/bitte-zurueckbleiben-02.wav'}, -- too much
         {soundSetName = '/br_1440_waggon_db.lua', wavName = 'closeDoors/stand-clear-of-the-doors-01.wav'},
         {soundSetName = '/br_1440_waggon_enno.lua', wavName = 'closeDoors/stand-clear-of-the-doors-01.wav'},
