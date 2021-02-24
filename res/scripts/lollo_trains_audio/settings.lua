@@ -17,7 +17,7 @@ return {
         '/BVGH_', -- metro berlin
         -- 'talent2_front.lua',
         -- 'talent2_middle.lua',
-        '/talent2_.lua',
+        '/talent2_',
         '/train_trieb_br423' -- br 422, 423, 430 -- this is enough, but you could also use the following
         -- 'train_trieb_br423stw.lua', -- br 422, 423, 430
         -- 'train_trieb_br423stwh.lua', -- br 422, 423, 430
@@ -34,7 +34,7 @@ return {
         {soundSetName = '/StadlerWaggon.lua', wavName = 'closeDoors/stand-clear-of-the-doors-01.wav'},
         {soundSetName = '/StadlerWaggon2.lua', wavName = 'closeDoors/stand-clear-of-the-doors-01.wav'},
         -- {soundSetName = '/talent2_front.lua', wavName = 'closeDoors/stand-clear-of-the-doors-01.wav'}, -- too much
-        {soundSetName = '/talent2_middle.lua', wavName = 'closeDoors/stand-clear-of-the-doors-01.wav'},
+        {soundSetName = '/talent2_middle.lua', wavName = 'closeDoors/bitte-zurueckbleiben-02.wav'},
         -- {soundSetName = '/train_trieb_br423', wavName = 'closeDoors/stand-clear-of-the-doors-01.wav'}, -- br 422, 423, 430 -- too much
         {soundSetName = '/train_trieb_br423stw.lua', wavName = 'closeDoors/stand-clear-of-the-doors-01.wav'}, -- br 422, 423, 430
     },
