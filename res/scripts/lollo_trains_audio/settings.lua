@@ -15,6 +15,8 @@ return {
         -- 'br_1440_waggon_db.lua',
         -- 'br_1440_waggon_enno.lua',
         '/BVGH_', -- metro berlin
+        '/C1_', -- metro muenchen
+        '/C2_', -- metro muenchen
         'g_metro', -- ussr metro
         -- 'talent2_front.lua',
         -- 'talent2_middle.lua',
