@@ -15,12 +15,14 @@ return {
         -- 'br_1440_waggon_db.lua',
         -- 'br_1440_waggon_enno.lua',
         '/BVGH_', -- metro berlin
+        'g_metro', -- ussr metro
         -- 'talent2_front.lua',
         -- 'talent2_middle.lua',
         '/talent2_',
-        '/train_trieb_br423' -- br 422, 423, 430 -- this is enough, but you could also use the following
+        '/train_trieb_br423', -- br 422, 423, 430 -- this is enough, but you could also use the following
         -- 'train_trieb_br423stw.lua', -- br 422, 423, 430
         -- 'train_trieb_br423stwh.lua', -- br 422, 423, 430
+        '/z8100', -- RATP and RER metro
     },
     addCloseDoorsSounds = true, -- can only be true or false
     -- Respect the data structure if you want to change this. It is a table of tuples. You can add or remove records, but not the table.
@@ -31,12 +33,15 @@ return {
         -- {soundSetName = '/br_1440_', wavName = 'closeDoors/bitte-zurueckbleiben-02.wav'}, -- too much
         {soundSetName = '/br_1440_waggon_db.lua', wavName = 'closeDoors/stand-clear-of-the-doors-01.wav'},
         {soundSetName = '/br_1440_waggon_enno.lua', wavName = 'closeDoors/stand-clear-of-the-doors-02.wav'},
+        {soundSetName = '/g_metro.lua', wavName = 'closeDoors/stand-clear-of-the-doors-02.wav'},
         {soundSetName = '/StadlerWaggon.lua', wavName = 'closeDoors/stand-clear-of-the-doors-01.wav'},
         {soundSetName = '/StadlerWaggon2.lua', wavName = 'closeDoors/stand-clear-of-the-doors-01.wav'},
         {soundSetName = '/talent2_front.lua', wavName = 'closeDoors/bitte-zurueckbleiben-02.wav'},
         -- {soundSetName = '/talent2_middle.lua', wavName = 'closeDoors/bitte-zurueckbleiben-02.wav'}, -- too much
         -- {soundSetName = '/train_trieb_br423', wavName = 'closeDoors/stand-clear-of-the-doors-01.wav'}, -- br 422, 423, 430 -- too much
         {soundSetName = '/train_trieb_br423stw.lua', wavName = 'closeDoors/stand-clear-of-the-doors-02.wav'}, -- br 422, 423, 430
+        {soundSetName = '/z8100.lua', wavName = 'closeDoors/stand-clear-of-the-doors-02.wav'}, -- RATP and RER
+        {soundSetName = '/z8100R.lua', wavName = 'closeDoors/stand-clear-of-the-doors-02.wav'}, -- RATP and RER
     },
     addOpenDoorsSounds = true, -- can only be true or false
     -- Respect the data structure if you want to change this. It is a table of tuples. You can add or remove records, but not the table.
@@ -46,6 +51,7 @@ return {
         -- {soundSetName = '/br_1440_', wavName = 'openDoors/mind-the-gap-01.wav'}, -- too much
         {soundSetName = '/br_1440_waggon_db.lua', wavName = 'openDoors/mind-the-gap-01.wav'},
         {soundSetName = '/br_1440_waggon_enno.lua', wavName = 'openDoors/mind-the-gap-01.wav'},
+        {soundSetName = '/g_metro.lua', wavName = 'openDoors/mind-the-gap-01.wav'},
         {soundSetName = '/StadlerWaggon.lua', wavName = 'openDoors/mind-the-gap-01.wav'},
         {soundSetName = '/StadlerWaggon2.lua', wavName = 'openDoors/mind-the-gap-01.wav'},
         {soundSetName = '/talent2_front.lua', wavName = 'openDoors/mind-the-gap-01.wav'},
@@ -53,5 +59,7 @@ return {
         -- {soundSetName = '/train_trieb_br423', wavName = 'openDoors/mind-the-gap-01.wav'}, -- br 422, 423, 430 -- too much
         {soundSetName = '/train_trieb_br423stw.lua', wavName = 'openDoors/mind-the-gap-01.wav'}, -- br 422, 423, 430
         -- {soundSetName = '/1992_stock_sound.lua', wavName = 'openDoors/mind-the-gap-01.wav'} -- london UG
+        {soundSetName = '/z8100.lua', wavName = 'openDoors/mind-the-gap-01.wav'}, -- RATP and RER
+        {soundSetName = '/z8100R.lua', wavName = 'openDoors/mind-the-gap-01.wav'}, -- RATP and RER
     }
 }
