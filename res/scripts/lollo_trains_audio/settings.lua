@@ -8,7 +8,8 @@ return {
     -- Mods store their sound sets in <mod directory>/res/config/sound_set .
     soundSetsThatReceiveNoWhistle = {
         '/1044_', -- BVG F92 - metro Berlin
-        '/1992_stock_sound', -- London UG
+        '/1992_stock_sound', -- London UG 1992
+        '/S8', -- London UG S7 and S8
         '/br_1440_', -- this is enough, but you could also use the following
         -- 'br_1440_front_db.lua',
         -- 'br_1440_front_enno.lua',
