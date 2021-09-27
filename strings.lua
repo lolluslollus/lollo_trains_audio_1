@@ -13,7 +13,7 @@ function data()
                 Note 1: the whistles can only come if the train has a sound set with clacks or chuffs.
                 This mod adds clacks to certain modded sound sets that haven't got them. It does not add chuffs.
 
-                Note 2: to get more modded trains to whistle, load https://steamcommunity.com/sharedfiles/filedetails/?id=1956333378 before other mods and this one after.
+                Note 2: to get more modded trains to whistle, load https://steamcommunity.com/sharedfiles/filedetails/?id=1956333378 and https://steamcommunity.com/sharedfiles/filedetails/?id=1984933237 before other mods and this one after.
             ]],
             ['_NAME'] = 'Extra sound effects for trains'
         }
