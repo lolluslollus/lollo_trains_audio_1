@@ -3,7 +3,7 @@ local _settingsUtils = require('lollo_trains_audio/settingsUtils')
 local _soundsetutil = require('soundsetutil')
 local _stringUtils = require('lollo_trains_audio/stringUtils')
 
-local _refDist = 10.0
+local _refDist = 15.0
 
 local function _addClacksFreightNew(data)
     local _clackWavNames = {
