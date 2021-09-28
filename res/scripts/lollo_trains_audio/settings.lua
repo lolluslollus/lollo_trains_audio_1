@@ -46,7 +46,7 @@ return {
         {soundSetName = '/StadlerWaggon2.lua', wavName = 'closeDoors/bitte-zurueckbleiben-01.wav'},
         {soundSetName = '/talent2_front.lua', wavName = 'closeDoors/bitte-zurueckbleiben-01-w-door-beep.wav'},
         -- {soundSetName = '/talent2_middle.lua', wavName = 'closeDoors/bitte-zurueckbleiben-01-w-door-beep.wav'},
-        {soundSetName = '/train_trieb_br423w.lua', wavName = 'closeDoors/bitte-zurueckbleiben-01.wav'}, -- br 422, 423, 430
+        {soundSetName = '/train_trieb_br423w.lua', wavName = 'closeDoors/bitte-zurueckbleiben-02.wav'}, -- br 422, 423, 430
         -- {soundSetName = '/train_trieb_br423stw.lua', wavName = 'closeDoors/bitte-zurueckbleiben-01.wav'}, -- br 422, 423, 430
         {soundSetName = '/z8100.lua', wavName = 'closeDoors/stand-clear-of-the-doors-02.wav'}, -- RATP and RER
         {soundSetName = '/z8100R.lua', wavName = 'closeDoors/stand-clear-of-the-doors-02.wav'}, -- RATP and RER
