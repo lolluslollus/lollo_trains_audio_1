@@ -46,8 +46,8 @@ return {
         {soundSetName = '/StadlerWaggon2.lua', wavName = 'closeDoors/bitte-zurueckbleiben-01.wav'},
         {soundSetName = '/talent2_front.lua', wavName = 'closeDoors/bitte-zurueckbleiben-02.wav'},
         -- {soundSetName = '/talent2_middle.lua', wavName = 'closeDoors/bitte-zurueckbleiben-02.wav'}, -- too much
-        -- {soundSetName = '/train_trieb_br423', wavName = 'closeDoors/stand-clear-of-the-doors-01.wav'}, -- br 422, 423, 430 -- too much
-        {soundSetName = '/train_trieb_br423stw.lua', wavName = 'closeDoors/bitte-zurueckbleiben-01.wav'}, -- br 422, 423, 430
+        {soundSetName = '/train_trieb_br423w.lua', wavName = 'closeDoors/stand-clear-of-the-doors-01.wav'}, -- br 422, 423, 430
+        -- {soundSetName = '/train_trieb_br423stw.lua', wavName = 'closeDoors/bitte-zurueckbleiben-01.wav'}, -- br 422, 423, 430
         {soundSetName = '/z8100.lua', wavName = 'closeDoors/stand-clear-of-the-doors-02.wav'}, -- RATP and RER
         {soundSetName = '/z8100R.lua', wavName = 'closeDoors/stand-clear-of-the-doors-02.wav'}, -- RATP and RER
     },
@@ -67,8 +67,8 @@ return {
         {soundSetName = '/StadlerWaggon2.lua', wavName = 'openDoors/mind-the-gap-03.wav'},
         {soundSetName = '/talent2_front.lua', wavName = 'openDoors/mind-the-gap-03.wav'},
         -- {soundSetName = '/talent2_middle.lua', wavName = 'openDoors/mind-the-gap-03.wav'}, -- too much
-        -- {soundSetName = '/train_trieb_br423', wavName = 'openDoors/mind-the-gap-03.wav'}, -- br 422, 423, 430 -- too much
-        {soundSetName = '/train_trieb_br423stw.lua', wavName = 'openDoors/mind-the-gap-03.wav'}, -- br 422, 423, 430
+        {soundSetName = '/train_trieb_br423w.lua', wavName = 'openDoors/mind-the-gap-03.wav'}, -- br 422, 423, 430
+        -- {soundSetName = '/train_trieb_br423stw.lua', wavName = 'openDoors/mind-the-gap-03.wav'}, -- br 422, 423, 430
         {soundSetName = '/z8100.lua', wavName = 'openDoors/mind-the-gap-01.wav'}, -- RATP and RER
         {soundSetName = '/z8100R.lua', wavName = 'openDoors/mind-the-gap-01.wav'}, -- RATP and RER
     }
