@@ -175,7 +175,7 @@ local _whistleWavNames = {
 function data()
     return {
         info = {
-            minorVersion = 9,
+            minorVersion = 10,
             severityAdd = 'NONE',
             severityRemove = 'NONE',
             name = _('_NAME'),
@@ -187,6 +187,9 @@ function data()
             addModifier(
                 'loadSoundSet',
                 function(fileName, data)
+                    -- if _stringUtils.stringContains(fileName, 'br_1440_') then
+                    --     print('loading sound set', fileName) debugPrint(data)
+                    -- end
                     -- LOLLO NOTE br101 whistles but vectron does not: why?
                     -- it looks like locos have no doors, only waggons do, even the stock gondola does - and it has clacks.
                     -- if stringUtils.stringContains(fileName, 'br101') then -- this one whistles
@@ -251,7 +254,6 @@ function data()
                         and type(data.events) == 'table'
                         and (type(data.events.clacks) == 'table' or type(data.events.chuffs) == 'table')
                         then
-                            -- print('LOLLO this is going to change = ', fileName)
                             local _whistleIndex = math.random(#_whistleWavNames)
                             if _getIsEventInSoundset(data, 'closeDoors') then
                                 _addWavToSoundsetEvent(data, 'closeDoors', _whistleWavNames[_whistleIndex], _refDist)
@@ -260,6 +262,10 @@ function data()
                             end
                         end
                     end
+
+                    -- if _stringUtils.stringContains(fileName, 'br_1440_') then
+                    --     print('patched sound set', fileName) debugPrint(data)
+                    -- end
 
                     return data
                 end
