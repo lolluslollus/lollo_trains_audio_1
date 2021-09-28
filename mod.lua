@@ -143,7 +143,9 @@ local function _getIsEventInSoundset(data, eventName)
         return false
     end
 
-    return type(data) == 'table' and type(data.events) == 'table' and type(data.events[eventName]) == 'table'
+    return type(data) == 'table'
+        and type(data.events) == 'table'
+        and type(data.events[eventName]) == 'table'
 end
 
 local function _addNewEventToSoundset(data, eventName, wavFileName, refDist)
