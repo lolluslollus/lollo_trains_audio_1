@@ -107,11 +107,14 @@ local function _addWavToSoundsetEvent(data, eventName, wavFileName, refDist, isA
         data.events[eventName].refDist = refDist
     end
 
+    -- LOLLO NOTE sometimes, data.result is missing:
+    -- we make it coz soundsetutil.addEvent always does it.
+    -- It seems useless tho.
     if type(data.result) ~= 'table' then data.result = {} end
     if type(data.result.events) ~= 'table' then data.result.events = {} end
-    -- if type(data.result.events[eventName]) ~= 'table' then
+    if type(data.result.events[eventName]) ~= 'table' then
         data.result.events[eventName] = {gain = 1.0, pitch = 1.0}
-    -- end
+    end
 
     -- print('data after =') debugPrint(data)
 end
