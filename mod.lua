@@ -246,6 +246,7 @@ function data()
                             _addClacksFreightOld(data)
                         elseif _stringUtils.stringContains(fileName, '/m_wagen')
                         or _stringUtils.stringContains(fileName, '/class_170')
+                        or _stringUtils.stringContains(fileName, '/fs_e428')
                         then
                             _addClacksPassengersNew(data)
                         end
