@@ -175,7 +175,7 @@ local _whistleWavNames = {
 function data()
     return {
         info = {
-            minorVersion = 11,
+            minorVersion = 10,
             severityAdd = 'NONE',
             severityRemove = 'NONE',
             name = _('_NAME'),
