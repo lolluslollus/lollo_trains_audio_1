@@ -10,6 +10,8 @@ return {
         '/1044_', -- BVG F92 - metro Berlin
         '/1972TS', -- London UG 1972
         '/1992_stock_sound', -- London UG 1992
+        '/berlin_reko.lua', -- Wannseebahn and future releases
+        '/berlin_stadtbahner.lua', -- Wannseebahn and future releases
         '/br_1440_', -- this is enough, but you could also use the following
         -- 'br_1440_front_db.lua',
         -- 'br_1440_front_enno.lua',
@@ -37,6 +39,8 @@ return {
     soundSetsThatReceiveTheCloseDoorsSound = {
         {soundSetName = '/1044_sound.lua', wavName = 'closeDoors/bitte-zurueckbleiben-01-w-door-beep.wav'},
         {soundSetName = '/1992_stock_sound.lua', wavName = 'closeDoors/stand-clear-of-the-doors-02.wav'}, -- london UG 1992 stock
+        {soundSetName = '/berlin_reko.lua', wavName = 'closeDoors/bitte-zurueckbleiben-01.wav'},
+        {soundSetName = '/berlin_stadtbahner.lua', wavName = 'closeDoors/bitte-zurueckbleiben-02.wav'},
         -- {soundSetName = '/br_1440_', wavName = 'closeDoors/bitte-zurueckbleiben-01-w-door-beep.wav'}, -- too much
         {soundSetName = '/br_1440_waggon_db.lua', wavName = 'closeDoors/bitte-zurueckbleiben-01.wav'},
         {soundSetName = '/br_1440_waggon_enno.lua', wavName = 'closeDoors/bitte-zurueckbleiben-02.wav'},
@@ -58,6 +62,8 @@ return {
     soundSetsThatReceiveTheOpenDoorsSound = {
         {soundSetName = '/1044_sound.lua', wavName = 'openDoors/bitte-beachten-sie-die-ansagen-w-gong.wav'},
         {soundSetName = '/1992_stock_sound.lua', wavName = 'openDoors/mind-the-gap-02.wav'}, -- london 1992 stock
+        -- {soundSetName = '/berlin_reko.lua', wavName = 'openDoors/bitte-achten-auf-abstand.wav'},
+        -- {soundSetName = '/berlin_stadtbahner.lua', wavName = 'openDoors/bitte-achten-auf-abstand.wav'},
         -- {soundSetName = '/br_1440_', wavName = 'openDoors/mind-the-gap-01.wav'}, -- too much
         {soundSetName = '/br_1440_waggon_db.lua', wavName = 'openDoors/bitte-achten-auf-abstand.wav'},
         {soundSetName = '/br_1440_waggon_enno.lua', wavName = 'openDoors/bitte-benutzen-sie-alle-einstiegstueren.wav'},
