@@ -6,7 +6,7 @@ return {
     -- Respect the data structure if you want to change this. You can add or remove records, but not the table.
     -- It is a table of parts of sound set file names.
     -- Mods store their sound sets in <mod directory>/res/config/sound_set .
-    soundSetsThatReceiveNoWhistle = {
+    soundSetsThatReceiveNoWhistleAndNoHorn = {
         '/1044_', -- BVG F92 - metro Berlin
         '/1972TS', -- London UG 1972
         '/1992_stock_sound', -- London UG 1992
@@ -77,5 +77,6 @@ return {
         -- {soundSetName = '/train_trieb_br423stw.lua', wavName = 'openDoors/bitte-achten-auf-abstand.wav'}, -- br 422, 423, 430
         {soundSetName = '/z8100.lua', wavName = 'openDoors/mind-the-gap-01.wav'}, -- RATP and RER
         {soundSetName = '/z8100R.lua', wavName = 'openDoors/mind-the-gap-01.wav'}, -- RATP and RER
-    }
+    },
+    addHorn = true,
 }

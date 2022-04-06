@@ -1,8 +1,9 @@
 local _mySettings = require('lollo_trains_audio/settings')
 local _settingsUtils = require('lollo_trains_audio/settingsUtils')
-local _soundsetutil = require('soundsetutil')
+local _soundsetutilUG = require('soundsetutil')
 local _stringUtils = require('lollo_trains_audio/stringUtils')
 
+local _hornRefDist = 50.0
 local _refDist = 15.0
 
 local function _addClacksFreightNew(data)
@@ -27,7 +28,7 @@ local function _addClacksFreightNew(data)
     if type(data.updateFns) ~= 'table' then
         data.updateFns = {}
     end
-    _soundsetutil.addEventClacks(data, _clackWavNames, 15.0, 10.0)
+    _soundsetutilUG.addEventClacks(data, _clackWavNames, 15.0, 10.0)
 end
 
 local function _addClacksFreightOld(data)
@@ -52,7 +53,7 @@ local function _addClacksFreightOld(data)
     if type(data.updateFns) ~= 'table' then
         data.updateFns = {}
     end
-    _soundsetutil.addEventClacks(data, _clackWavNames, 15.0, 10.0)
+    _soundsetutilUG.addEventClacks(data, _clackWavNames, 15.0, 10.0)
 end
 
 local function _addClacksPassengersNew(data)
@@ -77,7 +78,7 @@ local function _addClacksPassengersNew(data)
     if type(data.updateFns) ~= 'table' then
         data.updateFns = {}
     end
-    _soundsetutil.addEventClacks(data, _clackWavNames, 15.0, 10.0)
+    _soundsetutilUG.addEventClacks(data, _clackWavNames, 15.0, 10.0)
 end
 
 local function _addWavToSoundsetEvent(data, eventName, wavFileName, refDist, isAddFirst)
@@ -138,6 +139,16 @@ end
 --     gameSpeedUp = 1
 -- }
 
+local function _getIsElectricOrDiesel(data)
+    if not(data) or not(data.events) then return false end
+    return type(data.events.clacks) == 'table'
+end
+
+local function _getIsSteam(data)
+    if not(data) or not(data.events) then return false end
+    return type(data.events.chuffs) == 'table'
+end
+
 local function _getIsEventInSoundset(data, eventName)
     if data == nil or _stringUtils.isNullOrEmptyString(eventName) then
         return false
@@ -160,8 +171,25 @@ local function _addNewEventToSoundset(data, eventName, wavFileName, refDist)
     if type(data.result) ~= 'table' then data.result = {} end
     if type(data.result.events) ~= 'table' then data.result.events = {} end
 
-    _soundsetutil.addEvent(data, eventName, {wavFileName}, refDist) -- type(data.updateFns) == 'table' and data.updateFn or nil) NO!
+    _soundsetutilUG.addEvent(data, eventName, {wavFileName}, refDist) -- type(data.updateFns) == 'table' and data.updateFn or nil) NO!
 end
+
+local _hornElectricOrDieselWavNames = {
+    'vehicle/train_electric_old/whistle.wav',
+    'vehicle/train_electric_old/whistle2.wav',
+    'vehicle/train_electric_modern/horn_4.wav',
+    'vehicle/train_electric_modern/horn_12.wav',
+    'vehicle/train_electric_modern/horn_14.wav',
+    'vehicle/train_electric_modern/horn_15.wav',
+    'vehicle/train_electric_modern/horn_16.wav',
+}
+
+local _hornSteamWavNames = {
+    'vehicle/train_steam_old/horn.wav',
+    'vehicle/train_steam_old/steam_horn_2.wav',
+    'vehicle/train_steam_old/steam_horn_6.wav',
+    'vehicle/train_steam_old/steam_horn_13.wav',
+}
 
 local _whistleWavNames = {
     'whistles/station-whistle-01.wav',
@@ -205,6 +233,21 @@ function data()
                     --     end
                     -- end
 
+                    if _mySettings.addHorn
+                    and not _stringUtils.stringContainsOneOf(fileName, _mySettings.soundSetsThatReceiveNoWhistleAndNoHorn)
+                    then
+                        if not(_getIsEventInSoundset(data, 'horn')) then
+-- print('LOLLO horn event missing in soundSet ' .. (fileName or 'NIL'))
+                            if _getIsElectricOrDiesel(data) then
+                                local _hornIndex = math.random(#_hornElectricOrDieselWavNames)
+                                _addNewEventToSoundset(data, 'horn', _hornElectricOrDieselWavNames[_hornIndex], _hornRefDist)
+                            elseif _getIsSteam(data) then
+                                local _hornIndex = math.random(#_hornSteamWavNames)
+                                _addNewEventToSoundset(data, 'horn', _hornSteamWavNames[_hornIndex], _hornRefDist)
+                            end
+                        end
+                    end
+
                     if _mySettings.addOpenDoorsSounds then
                         local _wavName = _settingsUtils.getWavName(_mySettings.soundSetsThatReceiveTheOpenDoorsSound, fileName)
                         if not _stringUtils.isNullOrEmptyString(_wavName) then
@@ -228,7 +271,7 @@ function data()
                     end
 
                     if _mySettings.addStationMasterWhistles
-                    and not _stringUtils.stringContainsOneOf(fileName, _mySettings.soundSetsThatReceiveNoWhistle)
+                    and not _stringUtils.stringContainsOneOf(fileName, _mySettings.soundSetsThatReceiveNoWhistleAndNoHorn)
                     then
                         -- LOLLO NOTE We have no metadata, so we try to guess if it is a train sound set.
                         -- Only trains have clacks or chuffs, so it is a good guess.
@@ -250,10 +293,8 @@ function data()
                             _addClacksPassengersNew(data)
                         end
 
-                        if data
-                        and type(data.events) == 'table'
-                        and (type(data.events.clacks) == 'table' or type(data.events.chuffs) == 'table')
-                        then
+                        -- now I have clacks or chuffs, so I can check if it is electric/diesel or steam
+                        if (_getIsElectricOrDiesel(data) or _getIsSteam(data)) then
                             local _whistleIndex = math.random(#_whistleWavNames)
                             if _getIsEventInSoundset(data, 'closeDoors') then
                                 _addWavToSoundsetEvent(data, 'closeDoors', _whistleWavNames[_whistleIndex], _refDist)
