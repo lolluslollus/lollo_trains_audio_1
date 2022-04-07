@@ -1,3 +1,4 @@
+local _fileUtils = require('lollo_trains_audio.fileUtils')
 local _mySettings = require('lollo_trains_audio/settings')
 local _settingsUtils = require('lollo_trains_audio/settingsUtils')
 local _soundsetutilUG = require('soundsetutil')
@@ -6,19 +7,10 @@ local _stringUtils = require('lollo_trains_audio/stringUtils')
 local _hornRefDist = 50.0
 local _refDist = 15.0
 
-local function _addClacksFreightNew(data)
-    local _clackWavNames = {
-        'vehicle/clack/modern/part_1.wav',
-        'vehicle/clack/modern/part_2.wav',
-        'vehicle/clack/modern/part_3.wav',
-        'vehicle/clack/modern/part_4.wav',
-        'vehicle/clack/modern/part_5.wav',
-        'vehicle/clack/modern/part_6.wav',
-        'vehicle/clack/modern/part_7.wav',
-        'vehicle/clack/modern/part_8.wav',
-        'vehicle/clack/modern/part_9.wav',
-        'vehicle/clack/modern/part_10.wav'
-    }
+local function _addClacks(data, clackWavNames)
+    if type(data.events) ~= 'table' then
+        data.events = {}
+    end
     if type(data.result) ~= 'table' then
         data.result = {}
     end
@@ -28,61 +20,46 @@ local function _addClacksFreightNew(data)
     if type(data.updateFns) ~= 'table' then
         data.updateFns = {}
     end
-    _soundsetutilUG.addEventClacks(data, _clackWavNames, 15.0, 10.0)
+    _soundsetutilUG.addEventClacks(data, clackWavNames, 15.0, 10.0)
 end
 
-local function _addClacksFreightOld(data)
-    local _clackWavNames = {
-        'vehicle/clack/old/part_1.wav',
-        'vehicle/clack/old/part_2.wav',
-        'vehicle/clack/old/part_3.wav',
-        'vehicle/clack/old/part_4.wav',
-        'vehicle/clack/old/part_5.wav',
-        'vehicle/clack/old/part_6.wav',
-        'vehicle/clack/old/part_7.wav',
-        'vehicle/clack/old/part_8.wav',
-        'vehicle/clack/old/part_9.wav',
-        'vehicle/clack/old/part_10.wav'
-    }
-    if type(data.result) ~= 'table' then
-        data.result = {}
-    end
-    if type(data.result.events) ~= 'table' then
-        data.result.events = {}
-    end
-    if type(data.updateFns) ~= 'table' then
-        data.updateFns = {}
-    end
-    _soundsetutilUG.addEventClacks(data, _clackWavNames, 15.0, 10.0)
+local function _addClacksNew(data)
+    _addClacks(
+        data,
+        {
+            'vehicle/clack/modern/part_1.wav',
+            'vehicle/clack/modern/part_2.wav',
+            'vehicle/clack/modern/part_3.wav',
+            'vehicle/clack/modern/part_4.wav',
+            'vehicle/clack/modern/part_5.wav',
+            'vehicle/clack/modern/part_6.wav',
+            'vehicle/clack/modern/part_7.wav',
+            'vehicle/clack/modern/part_8.wav',
+            'vehicle/clack/modern/part_9.wav',
+            'vehicle/clack/modern/part_10.wav'
+        }
+    )
 end
 
-local function _addClacksPassengersNew(data)
-    local _clackWavNames = {
-        'vehicle/clack/modern/part_1.wav',
-        'vehicle/clack/modern/part_2.wav',
-        'vehicle/clack/modern/part_3.wav',
-        'vehicle/clack/modern/part_4.wav',
-        'vehicle/clack/modern/part_5.wav',
-        'vehicle/clack/modern/part_6.wav',
-        'vehicle/clack/modern/part_7.wav',
-        'vehicle/clack/modern/part_8.wav',
-        'vehicle/clack/modern/part_9.wav',
-        'vehicle/clack/modern/part_10.wav'
-    }
-    if type(data.result) ~= 'table' then
-        data.result = {}
-    end
-    if type(data.result.events) ~= 'table' then
-        data.result.events = {}
-    end
-    if type(data.updateFns) ~= 'table' then
-        data.updateFns = {}
-    end
-    _soundsetutilUG.addEventClacks(data, _clackWavNames, 15.0, 10.0)
+local function _addClacksOld(data)
+    _addClacks(
+        data,
+        {
+            'vehicle/clack/old/part_1.wav',
+            'vehicle/clack/old/part_2.wav',
+            'vehicle/clack/old/part_3.wav',
+            'vehicle/clack/old/part_4.wav',
+            'vehicle/clack/old/part_5.wav',
+            'vehicle/clack/old/part_6.wav',
+            'vehicle/clack/old/part_7.wav',
+            'vehicle/clack/old/part_8.wav',
+            'vehicle/clack/old/part_9.wav',
+            'vehicle/clack/old/part_10.wav'
+        }
+    )
 end
 
 local function _addWavToSoundsetEvent(data, eventName, wavFileName, refDist, isAddFirst)
-    -- print('data before =') debugPrint(data)
     if type(data) ~= 'table' then
         print('LOLLO sound effects for trains: warning: data is not a table in _addWavToSoundsetEvent')
     end
@@ -116,8 +93,6 @@ local function _addWavToSoundsetEvent(data, eventName, wavFileName, refDist, isA
     if type(data.result.events[eventName]) ~= 'table' then
         data.result.events[eventName] = {gain = 1.0, pitch = 1.0}
     end
-
-    -- print('data after =') debugPrint(data)
 end
 
 -- local _sampleInput = {
@@ -203,7 +178,7 @@ local _whistleWavNames = {
 function data()
     return {
         info = {
-            minorVersion = 11,
+            minorVersion = 12,
             severityAdd = 'NONE',
             severityRemove = 'NONE',
             name = _('_NAME'),
@@ -233,21 +208,6 @@ function data()
                     --     end
                     -- end
 
-                    if _mySettings.addHorn
-                    and not _stringUtils.stringContainsOneOf(fileName, _mySettings.soundSetsThatReceiveNoWhistleAndNoHorn)
-                    then
-                        if not(_getIsEventInSoundset(data, 'horn')) then
--- print('LOLLO horn event missing in soundSet ' .. (fileName or 'NIL'))
-                            if _getIsElectricOrDiesel(data) then
-                                local _hornIndex = math.random(#_hornElectricOrDieselWavNames)
-                                _addNewEventToSoundset(data, 'horn', _hornElectricOrDieselWavNames[_hornIndex], _hornRefDist)
-                            elseif _getIsSteam(data) then
-                                local _hornIndex = math.random(#_hornSteamWavNames)
-                                _addNewEventToSoundset(data, 'horn', _hornSteamWavNames[_hornIndex], _hornRefDist)
-                            end
-                        end
-                    end
-
                     if _mySettings.addOpenDoorsSounds then
                         local _wavName = _settingsUtils.getWavName(_mySettings.soundSetsThatReceiveTheOpenDoorsSound, fileName)
                         if not _stringUtils.isNullOrEmptyString(_wavName) then
@@ -270,30 +230,23 @@ function data()
                         end
                     end
 
+                    -- LOLLO NOTE We have no metadata, so we try to guess if it is a train sound set.
+                    -- Only trains have clacks or chuffs, so it is a good guess.
+                    -- Some trains may not have them: if so, we leave them out.
+
+                    -- Fix some sound sets that have no clacks
+                    local fileNameLastSegment = _fileUtils.getFileNameFromPath(fileName)
+                    if _stringUtils.arrayHasValue(_mySettings.soundSetsThatReceiveClacksNew, fileNameLastSegment) then
+                        _addClacksNew(data)
+                    elseif _stringUtils.arrayHasValue(_mySettings.soundSetsThatReceiveClacksOld, fileNameLastSegment) then
+                        _addClacksOld(data)
+                    end
+                    -- LOLLO TODO add chuffs as well, when you feel like
+
+                    -- now I have clacks or chuffs, so I can check if it is electric/diesel or steam
                     if _mySettings.addStationMasterWhistles
                     and not _stringUtils.stringContainsOneOf(fileName, _mySettings.soundSetsThatReceiveNoWhistleAndNoHorn)
                     then
-                        -- LOLLO NOTE We have no metadata, so we try to guess if it is a train sound set.
-                        -- Only trains have clacks or chuffs, so it is a good guess.
-                        -- Some trains may not have them: if so, we leave them out.
-
-                        -- Fix some sound sets that have no clacks
-                        if _stringUtils.stringContains(fileName, '/gw_neu')
-                        or _stringUtils.stringContains(fileName, '/h_wagen')
-                        or _stringUtils.stringContains(fileName, '/rmms')
-                        or _stringUtils.stringContains(fileName, '/faccpp')
-                        then
-                            _addClacksFreightNew(data)
-                        elseif _stringUtils.stringContains(fileName, '/gw_alt')
-                        then
-                            _addClacksFreightOld(data)
-                        elseif _stringUtils.stringContains(fileName, '/m_wagen')
-                        or _stringUtils.stringContains(fileName, '/class_170')
-                        then
-                            _addClacksPassengersNew(data)
-                        end
-
-                        -- now I have clacks or chuffs, so I can check if it is electric/diesel or steam
                         if (_getIsElectricOrDiesel(data) or _getIsSteam(data)) then
                             local _whistleIndex = math.random(#_whistleWavNames)
                             if _getIsEventInSoundset(data, 'closeDoors') then
@@ -304,9 +257,19 @@ function data()
                         end
                     end
 
-                    -- if _stringUtils.stringContains(fileName, 'br_1440_') then
-                    --     print('patched sound set', fileName) debugPrint(data)
-                    -- end
+                    if _mySettings.addHorn
+                    and not _stringUtils.stringContainsOneOf(fileName, _mySettings.soundSetsThatReceiveNoWhistleAndNoHorn)
+                    then
+                        if not(_getIsEventInSoundset(data, 'horn')) then
+                            if _getIsElectricOrDiesel(data) then
+                                local _hornIndex = math.random(#_hornElectricOrDieselWavNames)
+                                _addNewEventToSoundset(data, 'horn', _hornElectricOrDieselWavNames[_hornIndex], _hornRefDist)
+                            elseif _getIsSteam(data) then
+                                local _hornIndex = math.random(#_hornSteamWavNames)
+                                _addNewEventToSoundset(data, 'horn', _hornSteamWavNames[_hornIndex], _hornRefDist)
+                            end
+                        end
+                    end
 
                     return data
                 end
