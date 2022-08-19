@@ -10,6 +10,7 @@ return {
         '/1044_', -- BVG F92 - metro Berlin
         '/1972TS', -- London UG 1972
         '/1992_stock_sound', -- London UG 1992
+        '/b_stock', -- London District Line B Stock
         '/berlin_reko.lua', -- Wannseebahn and future releases
         '/berlin_stadtbahner.lua', -- Wannseebahn and future releases
         '/br_1440_', -- this is enough, but you could also use the following
