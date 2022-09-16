@@ -31,6 +31,7 @@ return {
         '/train_trieb_br423', -- br 422, 423, 430 -- this is enough, but you could also use the following
         -- 'train_trieb_br423stw.lua', -- br 422, 423, 430
         -- 'train_trieb_br423stwh.lua', -- br 422, 423, 430
+        -- 'wien_u_sound.lua', -- Vienna Type U
         '/z8100', -- RATP and RER metro
     },
     addCloseDoorsSounds = true, -- can only be true or false
