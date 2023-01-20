@@ -6,8 +6,8 @@ return {
     -- Respect the data structure if you want to change this. You can add or remove records, but not the table.
     -- It is a table of parts of sound set file names.
     -- Mods store their sound sets in <mod directory>/res/config/sound_set .
-    soundSetsThatReceiveNoWhistleAndNoHorn = {
-        '/1044_', -- BVG F92 - metro Berlin
+    soundSetsThatReceiveNoWhistle = {
+        '/1044_', -- BVG-Baureihe F92 - metro Berlin
         '/1972TS', -- London UG 1972
         '/1992_stock_sound', -- London UG 1992
         '/b_stock', -- London District Line B Stock
@@ -85,6 +85,10 @@ return {
         'br01.lua',
     },
     soundSetsThatReceiveClacksNew = {
+        '1044_sound.lua', -- BVG-Baureihe F92
+        '1972TS.lua', -- London Underground 1972 Stock
+        '1972TS_wa.lua', -- London Underground 1972 Stock
+        '1992_stock_sound.lua', -- London Underground 1992 stock
         'br101.lua',
         'br119.lua',
         'br145_0.lua',
@@ -119,14 +123,23 @@ return {
         'mk_twd_sound_wagen.lua',
         'r40.lua',
         'rmms.lua',
+        'StadlerWaggon.lua',
+        'StadlerWaggon2.lua',
         'train_eurodual_br159.lua',
         'train_trieb_br423stw.lua',
         'train_trieb_br423stwh.lua',
         'train_trieb_br423w.lua',
         'weisssi_br152.lua',
+        'wien_u_sound.lua',
+        'wien_v_sound.lua',
+        'z8100.lua', -- RATP and RER metro
+        'z8100R.lua', -- RATP and RER metro
     },
     soundSetsThatReceiveClacksOld = {
+        'b_stock.lua', -- London District Line B Stock
         'bboe1100.lua',
+        'berlin_reko.lua', -- Wannseebahn and future releases
+        'berlin_stadtbahner.lua', -- Wannseebahn and future releases
         'br52alt.lua',
         'DR_243_120_kmh.lua',
         'DR_243_140_kmh.lua',

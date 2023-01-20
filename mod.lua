@@ -245,7 +245,7 @@ function data()
 
                     -- now I have clacks or chuffs, so I can check if it is electric/diesel or steam
                     if _mySettings.addStationMasterWhistles
-                    and not _stringUtils.stringContainsOneOf(fileName, _mySettings.soundSetsThatReceiveNoWhistleAndNoHorn)
+                    and not _stringUtils.stringContainsOneOf(fileName, _mySettings.soundSetsThatReceiveNoWhistle)
                     then
                         if (_getIsElectricOrDiesel(data) or _getIsSteam(data)) then
                             local _whistleIndex = math.random(#_whistleWavNames)
@@ -258,7 +258,7 @@ function data()
                     end
 
                     if _mySettings.addHorn
-                    and not _stringUtils.stringContainsOneOf(fileName, _mySettings.soundSetsThatReceiveNoWhistleAndNoHorn)
+                    -- and not _stringUtils.stringContainsOneOf(fileName, _mySettings.soundSetsThatReceiveNoWhistle)
                     then
                         if not(_getIsEventInSoundset(data, 'horn')) then
                             if _getIsElectricOrDiesel(data) then
