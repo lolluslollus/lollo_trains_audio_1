@@ -288,6 +288,7 @@ function data()
                     end
 
                     if _mySettings.addBell
+                    -- and not _stringUtils.stringContainsOneOf(fileName, _mySettings.soundSetsThatReceiveNoBell)
                     then
                         if not(_getIsEventInSoundset(data, 'bell')) then
                             local _bellIndex = 1

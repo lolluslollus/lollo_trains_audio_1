@@ -2,9 +2,10 @@ function data()
     return {
         en = {
             ['_DESC'] = [[
-                [b]Station masters whistle when trains leave.
+                [b]Station masters whistle when trains leave.[/b]
                 Local trains instead receive announcements when opening and closing the doors.
-                As of build 35024, trains without horn receive one.[/b]
+                As of build 35024, trains without horn receive one.
+                As of build 35300, trains without level crossing bell receive it. It will sound when triggered by a "bell" waypoint.
 
                 This mod works for vanilla and many modded trains.
 
