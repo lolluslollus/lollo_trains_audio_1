@@ -134,19 +134,31 @@ local function _getIsEventInSoundset(data, eventName)
         and type(data.events[eventName]) == 'table'
 end
 
-local function _addNewEventToSoundset(data, eventName, wavFileName, refDist)
+---you can add an array of wav file names, but mostly, the first will be skipped
+---@param data any
+---@param eventName string
+---@param wavFileNames table<string>
+---@param refDist number
+local function _addNewEventToSoundset(data, eventName, wavFileNames, refDist)
     if type(data) ~= 'table' then
         print('LOLLO sound effects for trains: warning: data is not a table in _addNewEventToSoundset')
     end
-    if type(data) ~= 'table' or _stringUtils.isNullOrEmptyString(eventName) or _stringUtils.isNullOrEmptyString(wavFileName) then
+    if type(data) ~= 'table' or _stringUtils.isNullOrEmptyString(eventName) or type(wavFileNames) ~= 'table' then
         return
     end
+    local _wavFileNames = {}
+    for _, wavFileName in pairs(wavFileNames) do
+        if not(_stringUtils.isNullOrEmptyString(wavFileName)) then
+            _wavFileNames[#_wavFileNames+1] = wavFileName
+        end
+    end
+    if #_wavFileNames == 0 then return end
 
     if type(data.events) ~= 'table' then data.events = {} end
     if type(data.result) ~= 'table' then data.result = {} end
     if type(data.result.events) ~= 'table' then data.result.events = {} end
 
-    _soundsetutilUG.addEvent(data, eventName, {wavFileName}, refDist) -- type(data.updateFns) == 'table' and data.updateFn or nil) NO!
+    _soundsetutilUG.addEvent(data, eventName, _wavFileNames, refDist) -- type(data.updateFns) == 'table' and data.updateFn or nil) NO!
 end
 
 local _hornElectricOrDieselWavNames = {
@@ -164,6 +176,10 @@ local _hornSteamWavNames = {
     'vehicle/train_steam_old/steam_horn_2.wav',
     'vehicle/train_steam_old/steam_horn_6.wav',
     'vehicle/train_steam_old/steam_horn_13.wav',
+}
+
+local _levelCrossingBellWavNames = {
+    'railroad_crossing.wav',
 }
 
 local _whistleWavNames = {
@@ -214,7 +230,7 @@ function data()
                             if _getIsEventInSoundset(data, 'openDoors') then
                                 _addWavToSoundsetEvent(data, 'openDoors', _wavName, _refDist)
                             else
-                                _addNewEventToSoundset(data, 'openDoors', _wavName, _refDist)
+                                _addNewEventToSoundset(data, 'openDoors', {_wavName}, _refDist)
                             end
                         end
                     end
@@ -225,7 +241,7 @@ function data()
                             if _getIsEventInSoundset(data, 'closeDoors') then
                                 _addWavToSoundsetEvent(data, 'closeDoors', _wavName, _refDist)
                             else
-                                _addNewEventToSoundset(data, 'closeDoors', _wavName, _refDist)
+                                _addNewEventToSoundset(data, 'closeDoors', {_wavName}, _refDist)
                             end
                         end
                     end
@@ -252,7 +268,7 @@ function data()
                             if _getIsEventInSoundset(data, 'closeDoors') then
                                 _addWavToSoundsetEvent(data, 'closeDoors', _whistleWavNames[_whistleIndex], _refDist)
                             else
-                                _addNewEventToSoundset(data, 'closeDoors', _whistleWavNames[_whistleIndex], _refDist)
+                                _addNewEventToSoundset(data, 'closeDoors', {_whistleWavNames[_whistleIndex]}, _refDist)
                             end
                         end
                     end
@@ -263,11 +279,19 @@ function data()
                         if not(_getIsEventInSoundset(data, 'horn')) then
                             if _getIsElectricOrDiesel(data) then
                                 local _hornIndex = math.random(#_hornElectricOrDieselWavNames)
-                                _addNewEventToSoundset(data, 'horn', _hornElectricOrDieselWavNames[_hornIndex], _hornRefDist)
+                                _addNewEventToSoundset(data, 'horn', {_hornElectricOrDieselWavNames[_hornIndex]}, _hornRefDist)
                             elseif _getIsSteam(data) then
                                 local _hornIndex = math.random(#_hornSteamWavNames)
-                                _addNewEventToSoundset(data, 'horn', _hornSteamWavNames[_hornIndex], _hornRefDist)
+                                _addNewEventToSoundset(data, 'horn', {_hornSteamWavNames[_hornIndex]}, _hornRefDist)
                             end
+                        end
+                    end
+
+                    if _mySettings.addBell
+                    then
+                        if not(_getIsEventInSoundset(data, 'bell')) then
+                            local _bellIndex = 1
+                            _addNewEventToSoundset(data, 'bell', {_levelCrossingBellWavNames[_bellIndex]}, _hornRefDist)
                         end
                     end
 
