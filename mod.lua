@@ -296,6 +296,15 @@ function data()
                         end
                     end
 
+                    if _mySettings.addCrossing
+                    -- and not _stringUtils.stringContainsOneOf(fileName, _mySettings.soundSetsThatReceiveNoBell)
+                    then
+                        if not(_getIsEventInSoundset(data, 'crossing')) then
+                            local _bellIndex = 1
+                            _addNewEventToSoundset(data, 'crossing', {_levelCrossingBellWavNames[_bellIndex]}, _hornRefDist)
+                        end
+                    end
+
                     return data
                 end
             )

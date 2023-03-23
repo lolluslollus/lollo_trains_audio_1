@@ -81,6 +81,7 @@ return {
         {soundSetName = '/z8100R.lua', wavName = 'openDoors/mind-the-gap-01.wav'}, -- RATP and RER
     },
     addBell = true,
+    addCrossing = true,
     addHorn = true,
     soundSetsThatReceiveChuffsOld = {
         'br01.lua',
