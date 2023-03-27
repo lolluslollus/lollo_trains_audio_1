@@ -34,6 +34,9 @@ return {
         -- 'wien_u_sound.lua', -- Vienna Type U
         '/z8100', -- RATP and RER metro
     },
+    soundSetsThatReceiveNoBell = {},
+    soundSetsThatReceiveNoCrossing = {},
+    soundSetsThatReceiveNoHorn = {},
     addCloseDoorsSounds = true, -- can only be true or false
     -- Respect the data structure if you want to change this. It is a table of tuples. You can add or remove records, but not the table.
     -- Every tuple contains a part of the sound set file name and the path of the wav file, relative to res/audio/effects/

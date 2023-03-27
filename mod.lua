@@ -59,6 +59,38 @@ local function _addClacksOld(data)
     )
 end
 
+---you can add an array of wav file names, but mostly, the first will be skipped
+---@param data any
+---@param eventName string
+---@param wavFileNames table<string>
+---@param refDist number
+local function _addNewEventToSoundset(data, eventName, wavFileNames, refDist)
+    if type(data) ~= 'table' then
+        print('LOLLO sound effects for trains: warning: data is not a table in _addNewEventToSoundset')
+    end
+    if type(data) ~= 'table' or _stringUtils.isNullOrEmptyString(eventName) or type(wavFileNames) ~= 'table' then
+        return
+    end
+    local _wavFileNames = {}
+    for _, wavFileName in pairs(wavFileNames) do
+        if not(_stringUtils.isNullOrEmptyString(wavFileName)) then
+            _wavFileNames[#_wavFileNames+1] = wavFileName
+        end
+    end
+    if #_wavFileNames == 0 then return end
+
+    if type(data.events) ~= 'table' then data.events = {} end
+    if type(data.result) ~= 'table' then data.result = {} end
+    if type(data.result.events) ~= 'table' then data.result.events = {} end
+
+    _soundsetutilUG.addEvent(data, eventName, _wavFileNames, refDist) -- type(data.updateFns) == 'table' and data.updateFn or nil) NO!
+end
+
+---the first in an array of wav file names will be skipped, most times
+---@param data any
+---@param eventName string
+---@param wavFileName string
+---@param refDist number
 local function _addWavToSoundsetEvent(data, eventName, wavFileName, refDist, isAddFirst)
     if type(data) ~= 'table' then
         print('LOLLO sound effects for trains: warning: data is not a table in _addWavToSoundsetEvent')
@@ -114,17 +146,17 @@ end
 --     gameSpeedUp = 1
 -- }
 
-local function _getIsElectricOrDiesel(data)
+local function _isElectricOrDiesel(data)
     if not(data) or not(data.events) then return false end
     return type(data.events.clacks) == 'table'
 end
 
-local function _getIsSteam(data)
+local function _isSteam(data)
     if not(data) or not(data.events) then return false end
     return type(data.events.chuffs) == 'table'
 end
 
-local function _getIsEventInSoundset(data, eventName)
+local function _isEventInSoundset(data, eventName)
     if data == nil or _stringUtils.isNullOrEmptyString(eventName) then
         return false
     end
@@ -132,33 +164,6 @@ local function _getIsEventInSoundset(data, eventName)
     return type(data) == 'table'
         and type(data.events) == 'table'
         and type(data.events[eventName]) == 'table'
-end
-
----you can add an array of wav file names, but mostly, the first will be skipped
----@param data any
----@param eventName string
----@param wavFileNames table<string>
----@param refDist number
-local function _addNewEventToSoundset(data, eventName, wavFileNames, refDist)
-    if type(data) ~= 'table' then
-        print('LOLLO sound effects for trains: warning: data is not a table in _addNewEventToSoundset')
-    end
-    if type(data) ~= 'table' or _stringUtils.isNullOrEmptyString(eventName) or type(wavFileNames) ~= 'table' then
-        return
-    end
-    local _wavFileNames = {}
-    for _, wavFileName in pairs(wavFileNames) do
-        if not(_stringUtils.isNullOrEmptyString(wavFileName)) then
-            _wavFileNames[#_wavFileNames+1] = wavFileName
-        end
-    end
-    if #_wavFileNames == 0 then return end
-
-    if type(data.events) ~= 'table' then data.events = {} end
-    if type(data.result) ~= 'table' then data.result = {} end
-    if type(data.result.events) ~= 'table' then data.result.events = {} end
-
-    _soundsetutilUG.addEvent(data, eventName, _wavFileNames, refDist) -- type(data.updateFns) == 'table' and data.updateFn or nil) NO!
 end
 
 local _hornElectricOrDieselWavNames = {
@@ -227,7 +232,7 @@ function data()
                     if _mySettings.addOpenDoorsSounds then
                         local _wavName = _settingsUtils.getWavName(_mySettings.soundSetsThatReceiveTheOpenDoorsSound, fileName)
                         if not _stringUtils.isNullOrEmptyString(_wavName) then
-                            if _getIsEventInSoundset(data, 'openDoors') then
+                            if _isEventInSoundset(data, 'openDoors') then
                                 _addWavToSoundsetEvent(data, 'openDoors', _wavName, _refDist)
                             else
                                 _addNewEventToSoundset(data, 'openDoors', {_wavName}, _refDist)
@@ -238,7 +243,7 @@ function data()
                     if _mySettings.addCloseDoorsSounds then
                         local _wavName = _settingsUtils.getWavName(_mySettings.soundSetsThatReceiveTheCloseDoorsSound, fileName)
                         if not _stringUtils.isNullOrEmptyString(_wavName) then
-                            if _getIsEventInSoundset(data, 'closeDoors') then
+                            if _isEventInSoundset(data, 'closeDoors') then
                                 _addWavToSoundsetEvent(data, 'closeDoors', _wavName, _refDist)
                             else
                                 _addNewEventToSoundset(data, 'closeDoors', {_wavName}, _refDist)
@@ -263,9 +268,9 @@ function data()
                     if _mySettings.addStationMasterWhistles
                     and not _stringUtils.stringContainsOneOf(fileName, _mySettings.soundSetsThatReceiveNoWhistle)
                     then
-                        if (_getIsElectricOrDiesel(data) or _getIsSteam(data)) then
+                        if (_isElectricOrDiesel(data) or _isSteam(data)) then
                             local _whistleIndex = math.random(#_whistleWavNames)
-                            if _getIsEventInSoundset(data, 'closeDoors') then
+                            if _isEventInSoundset(data, 'closeDoors') then
                                 _addWavToSoundsetEvent(data, 'closeDoors', _whistleWavNames[_whistleIndex], _refDist)
                             else
                                 _addNewEventToSoundset(data, 'closeDoors', {_whistleWavNames[_whistleIndex]}, _refDist)
@@ -274,13 +279,13 @@ function data()
                     end
 
                     if _mySettings.addHorn
-                    -- and not _stringUtils.stringContainsOneOf(fileName, _mySettings.soundSetsThatReceiveNoWhistle)
+                    and not _stringUtils.stringContainsOneOf(fileName, _mySettings.soundSetsThatReceiveNoHorn)
                     then
-                        if not(_getIsEventInSoundset(data, 'horn')) then
-                            if _getIsElectricOrDiesel(data) then
+                        if not(_isEventInSoundset(data, 'horn')) then
+                            if _isElectricOrDiesel(data) then
                                 local _hornIndex = math.random(#_hornElectricOrDieselWavNames)
                                 _addNewEventToSoundset(data, 'horn', {_hornElectricOrDieselWavNames[_hornIndex]}, _hornRefDist)
-                            elseif _getIsSteam(data) then
+                            elseif _isSteam(data) then
                                 local _hornIndex = math.random(#_hornSteamWavNames)
                                 _addNewEventToSoundset(data, 'horn', {_hornSteamWavNames[_hornIndex]}, _hornRefDist)
                             end
@@ -288,20 +293,24 @@ function data()
                     end
 
                     if _mySettings.addBell
-                    -- and not _stringUtils.stringContainsOneOf(fileName, _mySettings.soundSetsThatReceiveNoBell)
+                    and not _stringUtils.stringContainsOneOf(fileName, _mySettings.soundSetsThatReceiveNoBell)
                     then
-                        if not(_getIsEventInSoundset(data, 'bell')) then
-                            local _bellIndex = 1
-                            _addNewEventToSoundset(data, 'bell', {_levelCrossingBellWavNames[_bellIndex]}, _hornRefDist)
+                        if not(_isEventInSoundset(data, 'bell')) then
+                            if (_isElectricOrDiesel(data) or _isSteam(data)) then -- ignore non-train soundsets
+                                local _bellIndex = 1
+                                _addNewEventToSoundset(data, 'bell', {_levelCrossingBellWavNames[_bellIndex]}, _hornRefDist)
+                            end
                         end
                     end
 
                     if _mySettings.addCrossing
-                    -- and not _stringUtils.stringContainsOneOf(fileName, _mySettings.soundSetsThatReceiveNoBell)
+                    and not _stringUtils.stringContainsOneOf(fileName, _mySettings.soundSetsThatReceiveNoCrossing)
                     then
-                        if not(_getIsEventInSoundset(data, 'crossing')) then
-                            local _bellIndex = 1
-                            _addNewEventToSoundset(data, 'crossing', {_levelCrossingBellWavNames[_bellIndex]}, _hornRefDist)
+                        if not(_isEventInSoundset(data, 'crossing')) then
+                            if (_isElectricOrDiesel(data) or _isSteam(data)) then -- ignore non-train soundsets
+                                local _bellIndex = 1
+                                _addNewEventToSoundset(data, 'crossing', {_levelCrossingBellWavNames[_bellIndex]}, _hornRefDist)
+                            end
                         end
                     end
 
